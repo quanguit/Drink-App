@@ -9,7 +9,31 @@ import {
   Text,
   StyleSheet,
   ImageBackground,
+  Dimensions,
 } from "react-native";
+
+import SearchBar from "../bar/search-bar";
+
+const numColumns = 2;
+
+const WIDTH = Dimensions.get("window").width;
+
+const formatData = (dataList, numColumns) => {
+  const totalRows = Math.floor(dataList.length / numColumns);
+  let totalLastRows = dataList.length - totalRows * numColumns;
+  while (totalLastRows !== 0 && totalLastRows !== numColumns) {
+    dataList.push({
+      title: "",
+      imageUrl: "blank",
+      size: "blank",
+      id: "blank",
+      linkUrl: "blank",
+      empty: true,
+    });
+    totalLastRows++;
+  }
+  return dataList;
+};
 
 const Directory = () => {
   const sections = useContext(DirectoryContext);
@@ -17,10 +41,11 @@ const Directory = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <SearchBar />
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={sections}
-        numColumns={2}
+        data={formatData(sections, numColumns)}
+        numColumns={numColumns}
         renderItem={({ item }) => (
           <View style={styles.box1}>
             <ImageBackground
@@ -31,7 +56,7 @@ const Directory = () => {
             </ImageBackground>
           </View>
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item, index) => index.toString()}
       />
     </SafeAreaView>
   );
@@ -41,10 +66,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
+    paddingTop: 10,
   },
   box1: {
-    flex: 0.5,
-    height: 200,
+    flex: 1,
+    height: 150,
+    padding: 10,
+    length: WIDTH / numColumns,
   },
   box2: {
     flex: 1,
