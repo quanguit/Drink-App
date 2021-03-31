@@ -17,6 +17,8 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
+import { COLORS, SIZES } from "../../containts/theme";
+
 const Tabs = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -34,15 +36,16 @@ const BottomBar = () => (
   <NavigationContainer>
     <Tabs.Navigator
       tabBarOptions={{
-        activeTintColor: "#000000",
-        inactiveTintColor: "#ffffff",
+        activeTintColor: COLORS.primary,
+        inactiveTintColor: COLORS.secondary,
         showLabel: true,
         showIcon: true,
         labelStyle: { fontSize: 15 },
         style: {
           height: 65,
           width: Dimensions.get("window").width,
-          backgroundColor: "#cc6600",
+          backgroundColor: COLORS.transparent,
+          elevation: 0,
         },
       }}
     >
@@ -54,7 +57,7 @@ const BottomBar = () => (
             <Entypo
               name="home"
               size={30}
-              color={focused ? "#000000" : "#ffffff"}
+              color={focused ? COLORS.primary : COLORS.secondary}
             />
           ),
         }}
@@ -67,7 +70,7 @@ const BottomBar = () => (
             <MaterialIcons
               name="collections"
               size={28}
-              color={focused ? "#000000" : "#ffffff"}
+              color={focused ? COLORS.primary : COLORS.secondary}
             />
           ),
         }}
@@ -80,7 +83,7 @@ const BottomBar = () => (
             <Feather
               name="shopping-cart"
               size={28}
-              color={focused ? "#000000" : "#ffffff"}
+              color={focused ? COLORS.primary : COLORS.secondary}
             />
           ),
         }}
@@ -93,7 +96,7 @@ const BottomBar = () => (
             <Fontisto
               name="heart"
               size={25}
-              color={focused ? "#000000" : "#ffffff"}
+              color={focused ? COLORS.primary : COLORS.secondary}
             />
           ),
         }}
@@ -106,7 +109,7 @@ const BottomBar = () => (
             <FontAwesome
               name="bars"
               size={30}
-              color={focused ? "#000000" : "#ffffff"}
+              color={focused ? COLORS.primary : COLORS.secondary}
             />
           ),
         }}
