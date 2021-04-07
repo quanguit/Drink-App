@@ -1,89 +1,105 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
-import MenuItem from "../menu-item/menu-item";
-import DirectoryContext from "../../contexts/directory.context.js";
+import CollectionsContext from "../../contexts/collections.contexts/collections.context.js";
+import Categories from "../../contexts/category.contexts/category.context.js";
 import {
   FlatList,
   SafeAreaView,
   View,
   Text,
   StyleSheet,
-  ImageBackground,
-  Dimensions,
+  TouchableOpacity,
+  ScrollView,
+  Image,
 } from "react-native";
 
 import SearchBar from "../bar/search-bar";
+import { COLORS, FONTS, SIZES } from "../../containts/theme";
 
-const numColumns = 2;
-
-const WIDTH = Dimensions.get("window").width;
-
-const formatData = (dataList, numColumns) => {
-  const totalRows = Math.floor(dataList.length / numColumns);
-  let totalLastRows = dataList.length - totalRows * numColumns;
-  while (totalLastRows !== 0 && totalLastRows !== numColumns) {
-    dataList.push({
-      title: "",
-      imageUrl: "blank",
-      size: "blank",
-      id: "blank",
-      linkUrl: "blank",
-      empty: true,
-    });
-    totalLastRows++;
-  }
-  return dataList;
-};
+import CollectionItem from "../collection-item/collection-item";
 
 const Directory = () => {
-  const sections = useContext(DirectoryContext);
-  // console.log(sections);
+  const collection = useContext(CollectionsContext);
+  const category = useContext(Categories);
+
+  const [collections, setCollections] = useState(collection);
+  const [directories, setDirectories] = useState(category);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // listed category
+  const onSelectCagory = (item) => {
+    let newList = collection.filter((a) => a.id === item.id);
+    setCollections(newList);
+  };
+
+  const renderItem = ({ item, index }) => {
+    return (
+      <TouchableOpacity
+        style={{
+          flex: 1,
+          marginLeft: index === 0 ? SIZES.padding : 0,
+          marginRight: SIZES.radius,
+        }}
+        onPress={() => onSelectCagory(item)}
+      >
+        <Image source={item.imageUrl} resizeMode="cover" style={styles.image} />
+        <View style={styles.box2}>
+          <Text style={styles.text}>{item.title.toUpperCase()}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  // search item
+  const searchFilter = (text) => {
+    setSearchQuery(text);
+  };
+
+  const filteredCollections = collections.filter((item) =>
+    item.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <SearchBar />
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={formatData(sections, numColumns)}
-        numColumns={numColumns}
-        renderItem={({ item }) => (
-          <View style={styles.box1}>
-            <ImageBackground
-              source={{ uri: item.imageUrl }}
-              style={styles.box2}
-            >
-              <Text style={styles.text}>{item.title.toUpperCase()}</Text>
-            </ImageBackground>
-          </View>
-        )}
-        keyExtractor={(item, index) => index.toString()}
-      />
-    </SafeAreaView>
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <SafeAreaView style={styles.container}>
+        <SearchBar handleChange={searchFilter} />
+        <View style={{ padding: SIZES.padding * 2 }}>
+          <Text style={styles.text1}>Main</Text>
+          <Text style={styles.text1}>Categories</Text>
+        </View>
+        <FlatList
+          data={directories}
+          keyExtractor={(item, index) => `${item.id}`}
+          renderItem={renderItem}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        />
+        <CollectionItem collections={filteredCollections} />
+      </SafeAreaView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: "100%",
-    paddingTop: 10,
-  },
   box1: {
-    flex: 1,
-    height: 150,
-    padding: 10,
-    length: WIDTH / numColumns,
-  },
-  box2: {
-    flex: 1,
+    marginTop: SIZES.radius,
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-    height: "100%",
+  },
+  image: {
+    width: 100,
+    height: 150,
+    borderRadius: 20,
   },
   text: {
-    fontSize: 20,
-    color: "blue",
+    marginLeft: 5,
+    ...FONTS.body3,
+    color: COLORS.lightGray,
+  },
+  text1: {
+    ...FONTS.h1,
+    fontSize: 40,
+    paddingTop: 20,
   },
 });
 
