@@ -1,4 +1,4 @@
-const DIRECTORY_DATA = [
+const CATEGORY_DATA = [
   {
     title: "hats",
     imageUrl: "https://i.ibb.co/cvpntL1/hats.png",
@@ -33,4 +33,4 @@ const DIRECTORY_DATA = [
   },
 ];
 
-export default DIRECTORY_DATA;
+export default CATEGORY_DATA;

@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Home from "../../screens/Home.Screen";
 import Categories from "../../screens/Categories.Screen";
-import ItemOrdered from "../../screens/Item-Ordered.Screen";
+import Checkout from "../../screens/Checkout-Item.Screen";
 import FavoriteItem from "../../screens/Favorite-Item.Screen";
 import Others from "../../screens/Others.Screen";
 
@@ -76,8 +76,8 @@ const BottomBar = () => (
         }}
       />
       <Tabs.Screen
-        name="Ordered"
-        component={ItemOrdered}
+        name="Checkout"
+        component={Checkout}
         options={{
           tabBarIcon: ({ focused }) => (
             <Feather
