@@ -4,7 +4,6 @@ import {
   Image,
   View,
   Text,
-  Button,
   FlatList,
   StyleSheet,
   Dimensions,
@@ -34,6 +33,10 @@ const CollectionItem = ({ collections }) => {
   };
 
   const renderItem = ({ item }) => {
+    if (item.empty) {
+      return <View style={[styles.container, styles.vi]} />;
+    }
+
     return (
       <SafeAreaView style={styles.container}>
         <Image source={item.imageUrl} resizeMode="cover" style={styles.image} />
@@ -91,6 +94,9 @@ const styles = StyleSheet.create({
     marginRight: 10,
     ...FONTS.body3,
     color: COLORS.darkgray,
+  },
+  vi: {
+    backgroundColor: "transparent",
   },
 });
 export default CollectionItem;

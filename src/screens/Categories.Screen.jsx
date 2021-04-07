@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
-import Directory from "../component/directory/directory";
+import Category from "../component/category/category";
 
-const Categories = () => <Directory />;
+const CategoryScreen = () => <Category />;
 
-export default Categories;
+export default CategoryScreen;

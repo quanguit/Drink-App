@@ -1,6 +1,6 @@
 import React from "react";
 import { Text } from "react-native";
 
-const Checkout = () => <Text>checkOut</Text>;
+const CheckoutScreen = () => <Text>checkOut</Text>;
 
-export default Checkout;
+export default CheckoutScreen;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Text } from "react-native";
 
-const FavoriteItem = () => <Text>FavoriteItem</Text>;
+const FavoriteItemScreen = () => <Text>FavoriteItem</Text>;
 
-export default FavoriteItem;
+export default FavoriteItemScreen;
