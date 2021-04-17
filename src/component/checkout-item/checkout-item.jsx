@@ -28,7 +28,7 @@ const CheckoutItem = ({ cartItem, addItem, removeItem, clearItem }) => {
             color={COLORS.white}
             onPress={() => addItem(cartItem)}
           />
-          <Text style={{ paddingHorizontal: 7, color: COLORS.white }}>|</Text>
+          <Text style={styles.divider}>|</Text>
           <AntDesign
             name="minus"
             size={20}
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     height: 100,
     elevation: 15,
     borderRadius: 10,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.lightGray3,
     marginVertical: 10,
     marginHorizontal: 20,
     paddingHorizontal: 10,
@@ -95,6 +95,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     paddingVertical: 20,
     flex: 1,
+  },
+  divider: {
+    paddingHorizontal: 7,
+    color: COLORS.white,
   },
 });
 export default connect(null, mapDispatchToProps)(CheckoutItem);
