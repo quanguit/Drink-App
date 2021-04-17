@@ -15,7 +15,7 @@ import { addItem } from "../../redux/cart/cart.actions.js";
 
 const numColumns = 2;
 
-const CollectionItem = ({ collections, toggleCartUnliked, addItem }) => {
+const CollectionItem = ({ collections, addItem }) => {
   const formatData = (datalist, numColumns) => {
     const totalRows = Math.floor(datalist.length / numColumns);
     let totalLastRow = datalist.length - totalRows * numColumns;
@@ -60,7 +60,6 @@ const CollectionItem = ({ collections, toggleCartUnliked, addItem }) => {
               size={20}
               backgroundColor="transparent"
               style={{ marginRight: 10 }}
-              onPress={toggleCartUnliked}
             />
           </TouchableOpacity>
         </View>
