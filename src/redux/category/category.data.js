@@ -32,5 +32,4 @@ const CATEGORY_DATA = [
     linkUrl: "shop/mens",
   },
 ];
-
 export default CATEGORY_DATA;

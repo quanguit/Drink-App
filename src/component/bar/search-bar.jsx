@@ -1,11 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, StyleSheet, TextInput, SafeAreaView } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { COLORS, SIZES } from "../../containts/theme";
-
-// const filteredMonsters = monsters.filter((monster) =>
-//   monster.name.toLowerCase().includes(searchField.toLowerCase())
-// );
 
 const SearchBar = ({ handleChange }) => (
   <SafeAreaView style={styles.container}>
@@ -30,7 +26,6 @@ const styles = StyleSheet.create({
   viewContainer: {
     height: 80,
     backgroundColor: COLORS.primary,
-    // "#c45653"
     justifyContent: "center",
     paddingHorizontal: 10,
   },
