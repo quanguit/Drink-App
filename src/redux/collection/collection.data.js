@@ -245,5 +245,4 @@ const COLLECTION_DATA = [
     price: 25000,
   },
 ];
-
 export default COLLECTION_DATA;

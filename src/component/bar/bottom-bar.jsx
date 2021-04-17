@@ -17,7 +17,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-import { COLORS, SIZES } from "../../containts/theme";
+import { COLORS } from "../../containts/theme";
 
 const Tabs = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -33,7 +33,7 @@ const Stack = createStackNavigator();
 // );
 
 const BottomBar = () => (
-  <NavigationContainer>
+  <NavigationContainer independent={true}>
     <Tabs.Navigator
       tabBarOptions={{
         activeTintColor: COLORS.primary,
