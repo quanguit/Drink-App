@@ -74,7 +74,7 @@ const HomeScreen = () => {
 					>
 						{slides.map((slide) => {
 							return (
-								<View style={styles.slide}>
+								<View style={styles.slide} key={slide.id}>
 									<Image source={slide.image} style={styles.image} />
 									<View style={styles.slide_text_wrapper}>
 										<Text style={styles.slide_text}>
@@ -106,7 +106,8 @@ const HomeScreen = () => {
 						data={offers}
 						renderItem={_renderItem}
 						sliderWidth={width}
-						itemWidth={200}
+						itemWidth={width - 210}
+						// itemHeight={400}
 					/>
 				</View>
 			</View>
