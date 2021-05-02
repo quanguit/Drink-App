@@ -3,20 +3,16 @@ import {
   addItemToCart,
   filterItemFromCart,
   removeItemFromCart,
+  addItemToCartFavorite,
 } from "./cart.utils";
 
 const INITIAL_STATE = {
   cartItems: [],
-  unLiked: true,
+  cartItemsFavorite: [],
 };
 
 const cartReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case CartActionTypes.TOGGLE_CART_UNLIKED:
-      return {
-        ...state,
-        unLiked: !state.unLiked,
-      };
     case CartActionTypes.ADD_ITEM:
       return {
         ...state,
@@ -31,6 +27,22 @@ const cartReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         cartItems: filterItemFromCart(state.cartItems, action.payload),
+      };
+    case CartActionTypes.ADD_ITEM_TO_FAVORITE:
+      return {
+        ...state,
+        cartItemsFavorite: addItemToCartFavorite(
+          state.cartItemsFavorite,
+          action.payload
+        ),
+      };
+    case CartActionTypes.REMOVE_ITEM_FROM_FAVORITE:
+      return {
+        ...state,
+        cartItemsFavorite: filterItemFromCart(
+          state.cartItemsFavorite,
+          action.payload
+        ),
       };
     default:
       return state;

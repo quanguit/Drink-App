@@ -17,43 +17,43 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
 const CheckoutScreen = ({ cartItems, total }) => {
-	return (
-		<ScrollView showsVerticalScrollIndicator={false}>
-			<SafeAreaView style={{ flex: 1 }}>
-				<View style={styles.header}>
-					<Text style={styles.headerName}>Ordered</Text>
-				</View>
-				<FlatList
-					data={cartItems}
-					showsVerticalScrollIndicator={false}
-					contentContainerStyle={{ paddingBottom: 80 }}
-					keyExtractor={(item, index) => `${item.product_id}`}
-					renderItem={({ item }) => <CheckoutItem cartItem={item} />}
-					ListFooterComponentStyle={{ paddingHorizontal: 25, marginTop: 20 }}
-					ListFooterComponent={() => {
-						if (total === 0) {
-							return (
-								<View>
-									<Text style={styles.textError}>
-										Chưa có sản phẩm nào được thêm vào giỏ hàng
-									</Text>
-								</View>
-							);
-						} else {
-							return (
-								<View>
-									<View style={styles.cart}>
-										<Text style={styles.textSuccess}>Tổng tiền</Text>
-										<Text style={styles.textSuccess}>{total}đ</Text>
-									</View>
-								</View>
-							);
-						}
-					}}
-				/>
-			</SafeAreaView>
-		</ScrollView>
-	);
+  return (
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={styles.header}>
+          <Text style={styles.headerName}>Ordered</Text>
+        </View>
+        <FlatList
+          data={cartItems}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 80 }}
+          keyExtractor={(item, index) => `${item.product_id}`}
+          renderItem={({ item }) => <CheckoutItem cartItem={item} />}
+          ListFooterComponentStyle={{ paddingHorizontal: 25, marginTop: 20 }}
+          ListFooterComponent={() => {
+            if (total === 0) {
+              return (
+                <View>
+                  <Text style={styles.textError}>
+                    Chưa có sản phẩm nào được thêm vào giỏ hàng
+                  </Text>
+                </View>
+              );
+            } else {
+              return (
+                <View>
+                  <View style={styles.cart}>
+                    <Text style={styles.textSuccess}>Tổng tiền</Text>
+                    <Text style={styles.textSuccess}>{total}đ</Text>
+                  </View>
+                </View>
+              );
+            }
+          }}
+        />
+      </SafeAreaView>
+    </ScrollView>
+  );
 };
 
 const mapStateToProps = createStructuredSelector({
