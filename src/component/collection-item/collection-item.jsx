@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   TouchableOpacity,
   Image,
@@ -11,11 +11,11 @@ import {
 import { COLORS, FONTS, SIZES } from "../../containts/theme";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { connect } from "react-redux";
-import { addItem } from "../../redux/cart/cart.actions.js";
+import { addItem, addItemToFavorite } from "../../redux/cart/cart.actions.js";
 
 const numColumns = 2;
 
-const CollectionItem = ({ collections, addItem }) => {
+const CollectionItem = ({ collections, addItem, addItemToFavorite }) => {
   const formatData = (datalist, numColumns) => {
     const totalRows = Math.floor(datalist.length / numColumns);
     let totalLastRow = datalist.length - totalRows * numColumns;
@@ -56,10 +56,11 @@ const CollectionItem = ({ collections, addItem }) => {
           </TouchableOpacity>
           <TouchableOpacity>
             <AntDesign
-              name="hearto"
+              name={item.like ? "heart" : "hearto"}
               size={20}
-              backgroundColor="transparent"
+              color="#ff4d4d"
               style={{ marginRight: 10 }}
+              onPress={() => addItemToFavorite(item)}
             />
           </TouchableOpacity>
         </View>
@@ -81,12 +82,13 @@ const CollectionItem = ({ collections, addItem }) => {
 
 const mapDispatchToProps = (dispatch) => ({
   addItem: (item) => dispatch(addItem(item)),
+  addItemToFavorite: (item) => dispatch(addItemToFavorite(item)),
 });
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginLeft: 10,
+    marginLeft: 8,
     marginBottom: SIZES.radius,
   },
   view: {
