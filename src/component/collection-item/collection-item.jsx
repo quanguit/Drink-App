@@ -12,8 +12,6 @@ import { COLORS, FONTS, SIZES } from "../../containts/theme";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { connect } from "react-redux";
 import { addItem, addItemToFavorite } from "../../redux/cart/cart.actions.js";
-import { selectCartItemsFavorite } from "../../redux/cart/cart.selectors.js";
-import { createStructuredSelector } from "reselect";
 
 const numColumns = 2;
 
