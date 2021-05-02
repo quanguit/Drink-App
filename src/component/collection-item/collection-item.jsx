@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   TouchableOpacity,
   Image,
@@ -11,11 +11,18 @@ import {
 import { COLORS, FONTS, SIZES } from "../../containts/theme";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { connect } from "react-redux";
-import { addItem } from "../../redux/cart/cart.actions.js";
+import { addItem, addItemToFavorite } from "../../redux/cart/cart.actions.js";
+import { selectCartItemsFavorite } from "../../redux/cart/cart.selectors.js";
+import { createStructuredSelector } from "reselect";
 
 const numColumns = 2;
 
-const CollectionItem = ({ collections, addItem }) => {
+const CollectionItem = ({
+  collections,
+  addItem,
+  addItemToFavorite,
+  cartItemsFavorite,
+}) => {
   const formatData = (datalist, numColumns) => {
     const totalRows = Math.floor(datalist.length / numColumns);
     let totalLastRow = datalist.length - totalRows * numColumns;
@@ -31,6 +38,21 @@ const CollectionItem = ({ collections, addItem }) => {
     }
     return datalist;
   };
+
+  const [data, setData] = useState(collections);
+
+  const Check = () => {
+    data.map((dt) => {
+      cartItemsFavorite.map((item) => {
+        if (item.product_id === dt.product_id) {
+          return (item.like = true);
+        }
+      });
+    });
+  };
+  useEffect(() => {
+    Check();
+  }, [cartItemsFavorite]);
 
   const Collection = ({ item }) => {
     if (item.empty) {
@@ -56,10 +78,11 @@ const CollectionItem = ({ collections, addItem }) => {
           </TouchableOpacity>
           <TouchableOpacity>
             <AntDesign
-              name="hearto"
+              name={item.like ? "heart" : "hearto"}
               size={20}
-              backgroundColor="transparent"
+              color="#ff4d4d"
               style={{ marginRight: 10 }}
+              onPress={() => addItemToFavorite(item)}
             />
           </TouchableOpacity>
         </View>
@@ -69,7 +92,7 @@ const CollectionItem = ({ collections, addItem }) => {
 
   return (
     <FlatList
-      data={formatData(collections, numColumns)}
+      data={formatData(data, numColumns)}
       keyExtractor={(item, index) => `${item.product_id}`}
       renderItem={({ item }) => <Collection item={item} />}
       numColumns={numColumns}
@@ -81,12 +104,17 @@ const CollectionItem = ({ collections, addItem }) => {
 
 const mapDispatchToProps = (dispatch) => ({
   addItem: (item) => dispatch(addItem(item)),
+  addItemToFavorite: (item) => dispatch(addItemToFavorite(item)),
+});
+
+const mapStateToProps = createStructuredSelector({
+  cartItemsFavorite: selectCartItemsFavorite,
 });
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginLeft: 10,
+    marginLeft: 8,
     marginBottom: SIZES.radius,
   },
   view: {
@@ -114,4 +142,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, mapDispatchToProps)(CollectionItem);
+export default connect(mapStateToProps, mapDispatchToProps)(CollectionItem);
