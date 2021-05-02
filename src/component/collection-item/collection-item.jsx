@@ -39,21 +39,6 @@ const CollectionItem = ({
     return datalist;
   };
 
-  const [data, setData] = useState(collections);
-
-  const Check = () => {
-    data.map((dt) => {
-      cartItemsFavorite.map((item) => {
-        if (item.product_id === dt.product_id) {
-          return (item.like = true);
-        }
-      });
-    });
-  };
-  useEffect(() => {
-    Check();
-  }, [cartItemsFavorite]);
-
   const Collection = ({ item }) => {
     if (item.empty) {
       return <View style={[styles.container, styles.vi]} />;
@@ -92,7 +77,7 @@ const CollectionItem = ({
 
   return (
     <FlatList
-      data={formatData(data, numColumns)}
+      data={formatData(collections, numColumns)}
       keyExtractor={(item, index) => `${item.product_id}`}
       renderItem={({ item }) => <Collection item={item} />}
       numColumns={numColumns}
