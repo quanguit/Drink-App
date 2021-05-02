@@ -64,54 +64,56 @@ const HomeScreen = () => {
     );
   };
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.container}>
-        <View style={{ width: width, height: 200 }}>
-          <Swiper
-            autoplay={true}
-            dot={<View style={styles.dot} />}
-            activeDot={<View style={styles.activeDot} />}
-          >
-            {slides.map((slide) => {
-              return (
-                <View style={styles.slide} key={slide.id}>
-                  <Image source={slide.image} style={styles.image} />
-                  <View style={styles.slide_text_wrapper}>
-                    <Text style={styles.slide_text}>
-                      World's Greatest Drinks
-                    </Text>
-                  </View>
-                </View>
-              );
-            })}
-          </Swiper>
-        </View>
-        <View style={{ marginTop: 2 }}>
-          {coupon.map((coupon) => {
-            return (
-              <Coupon
-                key={coupon.id}
-                icon={coupon.icon}
-                title={coupon.title}
-                desc={coupon.desc}
-              />
-            );
-          })}
-        </View>
+    <View>
+      <Text>Home</Text>
+    </View>
+    //   <ScrollView showsVerticalScrollIndicator={false}>
+    //     <View style={styles.container}>
+    //       <View style={{ width: width, height: 200 }}>
+    //         <Swiper
+    //           autoplay={true}
+    //           dot={<View style={styles.dot} />}
+    //           activeDot={<View style={styles.activeDot} />}
+    //         >
+    //           {slides.map((slide) => {
+    //             return (
+    //               <View style={styles.slide} key={slide.id}>
+    //                 <Image source={slide.image} style={styles.image} />
+    //                 <View style={styles.slide_text_wrapper}>
+    //                   <Text style={styles.slide_text}>
+    //                     World's Greatest Drinks
+    //                   </Text>
+    //                 </View>
+    //               </View>
+    //             );
+    //           })}
+    //         </Swiper>
+    //       </View>
+    //       <View style={{ marginTop: 2 }}>
+    //         {coupon.map((coupon) => {
+    //           return (
+    //             <Coupon
+    //               key={coupon.id}
+    //               icon={coupon.icon}
+    //               title={coupon.title}
+    //               desc={coupon.desc}
+    //             />
+    //           );
+    //         })}
+    //       </View>
 
-        <View style={{ marginTop: 22, marginLeft: 20 }}>
-          <Text style={{ fontSize: 16 }}>Best Offers</Text>
-          <Carousel
-            firstItem={1}
-            data={offers}
-            renderItem={_renderItem}
-            sliderWidth={width}
-            itemWidth={width - 210}
-            // itemHeight={400}
-          />
-        </View>
-      </View>
-    </ScrollView>
+    //       <View style={{ marginTop: 22, marginLeft: 20 }}>
+    //         <Text style={{ fontSize: 16 }}>Best Offers</Text>
+    //         <Carousel
+    //           firstItem={1}
+    //           data={offers}
+    //           renderItem={_renderItem}
+    //           sliderWidth={width}
+    //           itemWidth={width - 210}
+    //         />
+    //       </View>
+    //     </View>
+    //   </ScrollView>
   );
 };
 

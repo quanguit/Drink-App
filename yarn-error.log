@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add @react-native-firebase
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add @react-native-firebase/app
 
 PATH: 
   C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\nhatq\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Program Files (x86)\Yarn\bin;C:\Program Files\Azure Data Studio\bin;C:\Users\nhatq\anaconda3;C:\Users\nhatq\anaconda3\Library\mingw-w64\bin;C:\Users\nhatq\anaconda3\Library\usr\bin;C:\Users\nhatq\anaconda3\Library\bin;C:\Users\nhatq\anaconda3\Scripts;C:\Users\nhatq\AppData\Local\Microsoft\WindowsApps;C:\VSCode\Microsoft VS Code\bin;C:\Users\nhatq\AppData\Roaming\npm;C:\Users\nhatq\AppData\Local\Yarn\bin;C:\Program Files\Azure Data Studio\bin
@@ -14,17 +14,8 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@react-native-firebase: Request "https://registry.yarnpkg.com/@react-native-firebase" returned a 405
-      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66106:18)
-      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140749:22)
-      at Request.emit (events.js:315:20)
-      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141721:10)
-      at Request.emit (events.js:315:20)
-      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141643:12)
-      at Object.onceWrapper (events.js:421:28)
-      at IncomingMessage.emit (events.js:327:22)
-      at endReadableNT (internal/streams/readable.js:1327:12)
-      at processTicksAndRejections (internal/process/task_queues.js:80:21)
+  Error: getaddrinfo ENOTFOUND registry.yarnpkg.com
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:67:26)
 
 npm manifest: 
   {
@@ -37,6 +28,7 @@ npm manifest:
       "eject": "expo eject"
     },
     "dependencies": {
+      "@react-native-firebase/firestore": "^11.4.1",
       "@react-navigation/bottom-tabs": "^5.11.8",
       "@react-navigation/native": "^5.9.3",
       "@react-navigation/stack": "^5.14.3",
@@ -51,8 +43,10 @@ npm manifest:
       "react-native-firebase": "^5.6.0",
       "react-native-gesture-handler": "^1.10.3",
       "react-native-screens": "^2.18.1",
+      "react-native-snap-carousel": "^3.9.1",
+      "react-native-swiper": "^1.6.0",
       "react-native-vector-icons": "^8.1.0",
-      "react-native-web": "~0.13.12",
+      "react-native-web": "^0.16.0",
       "react-redux": "^7.2.3",
       "react-stripe-checkout": "^2.6.3",
       "redux": "^4.0.5",
@@ -1832,6 +1826,11 @@ Lockfile:
       strip-ansi "^5.2.0"
       sudo-prompt "^9.0.0"
       wcwidth "^1.0.1"
+  
+  "@react-native-firebase/firestore@^11.4.1":
+    version "11.4.1"
+    resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-11.4.1.tgz#7ed87577cc9eef0f24a8367003186711ce6ec058"
+    integrity sha512-bptsAFRR5RbnsHnpRbJP8JVS1YugPtHOPS83ufESIInJvd7lVrWo3w6NJZmVbjIs696WVtN534J2zRRenACqxw==
   
   "@react-navigation/bottom-tabs@^5.11.8":
     version "5.11.8"
