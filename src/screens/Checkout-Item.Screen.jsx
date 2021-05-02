@@ -17,7 +17,6 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
 const CheckoutScreen = ({ cartItems, total }) => {
-	// console.log(cartItems);
 	return (
 		<ScrollView showsVerticalScrollIndicator={false}>
 			<SafeAreaView style={{ flex: 1 }}>
