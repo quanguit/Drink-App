@@ -12,17 +12,10 @@ import { COLORS, FONTS, SIZES } from "../../containts/theme";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { connect } from "react-redux";
 import { addItem, addItemToFavorite } from "../../redux/cart/cart.actions.js";
-import { selectCartItemsFavorite } from "../../redux/cart/cart.selectors.js";
-import { createStructuredSelector } from "reselect";
 
 const numColumns = 2;
 
-const CollectionItem = ({
-  collections,
-  addItem,
-  addItemToFavorite,
-  cartItemsFavorite,
-}) => {
+const CollectionItem = ({ collections, addItem, addItemToFavorite }) => {
   const formatData = (datalist, numColumns) => {
     const totalRows = Math.floor(datalist.length / numColumns);
     let totalLastRow = datalist.length - totalRows * numColumns;
@@ -38,21 +31,6 @@ const CollectionItem = ({
     }
     return datalist;
   };
-
-  const [data, setData] = useState(collections);
-
-  const Check = () => {
-    data.map((dt) => {
-      cartItemsFavorite.map((item) => {
-        if (item.product_id === dt.product_id) {
-          return (item.like = true);
-        }
-      });
-    });
-  };
-  useEffect(() => {
-    Check();
-  }, [cartItemsFavorite]);
 
   const Collection = ({ item }) => {
     if (item.empty) {
@@ -92,7 +70,7 @@ const CollectionItem = ({
 
   return (
     <FlatList
-      data={formatData(data, numColumns)}
+      data={formatData(collections, numColumns)}
       keyExtractor={(item, index) => `${item.product_id}`}
       renderItem={({ item }) => <Collection item={item} />}
       numColumns={numColumns}
@@ -105,10 +83,6 @@ const CollectionItem = ({
 const mapDispatchToProps = (dispatch) => ({
   addItem: (item) => dispatch(addItem(item)),
   addItemToFavorite: (item) => dispatch(addItemToFavorite(item)),
-});
-
-const mapStateToProps = createStructuredSelector({
-  cartItemsFavorite: selectCartItemsFavorite,
 });
 
 const styles = StyleSheet.create({
@@ -142,4 +116,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CollectionItem);
+export default connect(null, mapDispatchToProps)(CollectionItem);
