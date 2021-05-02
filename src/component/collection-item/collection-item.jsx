@@ -17,12 +17,7 @@ import { createStructuredSelector } from "reselect";
 
 const numColumns = 2;
 
-const CollectionItem = ({
-  collections,
-  addItem,
-  addItemToFavorite,
-  cartItemsFavorite,
-}) => {
+const CollectionItem = ({ collections, addItem, addItemToFavorite }) => {
   const formatData = (datalist, numColumns) => {
     const totalRows = Math.floor(datalist.length / numColumns);
     let totalLastRow = datalist.length - totalRows * numColumns;
@@ -92,10 +87,6 @@ const mapDispatchToProps = (dispatch) => ({
   addItemToFavorite: (item) => dispatch(addItemToFavorite(item)),
 });
 
-const mapStateToProps = createStructuredSelector({
-  cartItemsFavorite: selectCartItemsFavorite,
-});
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -127,4 +118,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CollectionItem);
+export default connect(null, mapDispatchToProps)(CollectionItem);
