@@ -114,7 +114,7 @@ const SignInScreen = ({navigation}) => {
 
     return (
       <View style={styles.container}>
-          <StatusBar backgroundColor='#009387' barStyle="light-content"/>
+          <StatusBar backgroundColor='#Fc6d3f' barStyle="light-content"/>
         <View style={styles.header}>
             <Text style={styles.text_header}>Welcome!</Text>
         </View>
@@ -208,7 +208,7 @@ const SignInScreen = ({navigation}) => {
             
 
             <TouchableOpacity>
-                <Text style={{color: '#009387', marginTop:15}}>Forgot password?</Text>
+                <Text style={{color: '#Fc6d3f', marginTop:15}}>Forgot password?</Text>
             </TouchableOpacity>
             <View style={styles.button}>
                 <TouchableOpacity
@@ -216,20 +216,20 @@ const SignInScreen = ({navigation}) => {
                     style={styles.signIn}
                 >
                         <Text style={[styles.textSign, {
-                            color: '#009387'
+                            color: '#Fc6d3f'
                         }]}>Sign In</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => navigation.navigate('SignUpScreen')}
                     style={[styles.signIn, {
-                        borderColor: '#009387',
+                        borderColor: '#Fc6d3f',
                         borderWidth: 1,
                         marginTop: 15
                     }]}
                 >
                     <Text style={[styles.textSign, {
-                        color: '#009387'
+                        color: '#Fc6d3f'
                     }]}>Sign Up</Text>
                 </TouchableOpacity>
             </View>
@@ -243,7 +243,7 @@ export default SignInScreen;
 const styles = StyleSheet.create({
     container: {
       flex: 1, 
-      backgroundColor: '#009387'
+      backgroundColor: '#Fc6d3f'
     },
     header: {
         flex: 1,
