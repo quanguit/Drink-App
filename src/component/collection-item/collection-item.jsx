@@ -15,7 +15,7 @@ import { addItem, addItemToFavorite } from "../../redux/cart/cart.actions.js";
 
 const numColumns = 2;
 
-const CollectionItem = ({ collections, addItem, addItemToFavorite }) => {
+const CollectionItem = ({ collection, addItem, addItemToFavorite }) => {
   const formatData = (datalist, numColumns) => {
     const totalRows = Math.floor(datalist.length / numColumns);
     let totalLastRow = datalist.length - totalRows * numColumns;
@@ -70,8 +70,8 @@ const CollectionItem = ({ collections, addItem, addItemToFavorite }) => {
 
   return (
     <FlatList
-      data={formatData(collections, numColumns)}
-      keyExtractor={(item, index) => `${item.product_id}`}
+      data={formatData(collection, numColumns)}
+      keyExtractor={(item, index) => `${item._id}`}
       renderItem={({ item }) => <Collection item={item} />}
       numColumns={numColumns}
       vertical
