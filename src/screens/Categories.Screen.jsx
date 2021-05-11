@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FlatList,
   SafeAreaView,
@@ -9,7 +9,7 @@ import {
   ScrollView,
   Image,
 } from "react-native";
-
+import axios from "axios";
 import SearchBar from "../component/bar/search-bar";
 import { COLORS, FONTS, SIZES } from "../containts/theme.js";
 import CollectionItem from "../component/collection-item/collection-item";
@@ -20,12 +20,39 @@ import { connect } from "react-redux";
 
 const CategoryScreen = ({ categories, collections }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [collection, setCollection] = useState(collections);
+  const [category, setCategory] = useState([]);
+  const [collection, setCollection] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("https://backend-app-lamquanghy.herokuapp.com/category")
+      .then((res) => {
+        setCategory(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("https://backend-app-lamquanghy.herokuapp.com/collection")
+      .then((res) => {
+        setCollection(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   // listed category
   const onSelectCagory = (item) => {
-    let newList = collections.filter((a) => a.id === item.id);
-    setCollection(newList);
+    const fetchCollection = async () => {
+      await axios
+        .get(
+          `https://backend-app-lamquanghy.herokuapp.com/collection/${item._id}`
+        )
+        .then((res) => {
+          setCollection(res.data);
+        });
+    };
+    fetchCollection();
   };
 
   const renderItem = ({ item, index }) => {
@@ -64,13 +91,13 @@ const CategoryScreen = ({ categories, collections }) => {
           <Text style={styles.text1}>Categories</Text>
         </View>
         <FlatList
-          data={categories}
-          keyExtractor={(item, index) => `${item.id}`}
+          data={category}
+          keyExtractor={(item, index) => `${item._id}`}
           renderItem={renderItem}
           horizontal
           showsHorizontalScrollIndicator={false}
         />
-        <CollectionItem collections={filteredCollection} />
+        <CollectionItem collection={filteredCollection} />
       </SafeAreaView>
     </ScrollView>
   );
