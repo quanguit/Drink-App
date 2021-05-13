@@ -24,21 +24,31 @@ const CategoryScreen = ({ categories, collections }) => {
   const [collection, setCollection] = useState([]);
 
   useEffect(() => {
+    let unMounted = false;
     axios
       .get("https://backend-app-lamquanghy.herokuapp.com/category")
       .then((res) => {
-        setCategory(res.data);
-      })
-      .catch((err) => console.log(err));
+        if (!unMounted) {
+          setCategory(res.data);
+        }
+      });
+    return () => {
+      unMounted = true;
+    };
   }, []);
 
   useEffect(() => {
+    let unMounted = false;
     axios
       .get("https://backend-app-lamquanghy.herokuapp.com/collection")
       .then((res) => {
-        setCollection(res.data);
-      })
-      .catch((err) => console.log(err));
+        if (!unMounted) {
+          setCollection(res.data);
+        }
+      });
+    return () => {
+      unMounted = true;
+    };
   }, []);
 
   // listed category
