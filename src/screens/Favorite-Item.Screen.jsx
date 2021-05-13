@@ -27,7 +27,7 @@ const FavoriteItemScreen = ({ cartItemsFavorite, cartItemsCount }) => {
           data={cartItemsFavorite}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 80 }}
-          keyExtractor={(item, index) => `${item.product_id}`}
+          keyExtractor={(item, index) => `${item._id}`}
           renderItem={({ item }) => <FavoriteItem cartItem={item} />}
           ListFooterComponentStyle={{ paddingHorizontal: 25, marginTop: 20 }}
           ListFooterComponent={() => {
