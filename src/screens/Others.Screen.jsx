@@ -6,6 +6,7 @@ import RootStackScreen from "../screens/RootStackScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { AuthContext } from "../contexts/context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Header from "../component/bar/header";
 
 const OthersScreen = () => {
   const initialLoginState = {
@@ -90,9 +91,19 @@ const OthersScreen = () => {
 
   if (loginState.isLoading) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" />
-      </View>
+      <AuthContext.Provider value={authContext}>
+        <NavigationContainer independent={true}>
+          {loginState.userToken !== null ? (
+            <View>
+              <Header />
+              <Text>Others</Text>
+            </View>
+          ) : (
+            <RootStackScreen />
+          )}
+        </NavigationContainer>
+      </AuthContext.Provider>
+      //<BottomBar />
     );
   }
   return (

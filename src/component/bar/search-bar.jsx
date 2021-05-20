@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
   viewContainer: {
     height: 80,
-    backgroundColor: COLORS.primary,
+    backgroundColor:'transparent',
     justifyContent: "center",
     paddingHorizontal: 10,
   },

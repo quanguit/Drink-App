@@ -13,6 +13,7 @@ import * as Animatable from 'react-native-animatable';
 //import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+import {COLORS} from "../containts/theme"
 
 import { useTheme } from 'react-native-paper';
 
@@ -114,7 +115,8 @@ const SignInScreen = ({navigation}) => {
 
     return (
       <View style={styles.container}>
-          <StatusBar backgroundColor='#Fc6d3f' barStyle="light-content"/>
+          <StatusBar backgroundColor={COLORS.primary} barStyle="light-content"/>
+          
         <View style={styles.header}>
             <Text style={styles.text_header}>Welcome!</Text>
         </View>
@@ -208,7 +210,7 @@ const SignInScreen = ({navigation}) => {
             
 
             <TouchableOpacity>
-                <Text style={{color: '#Fc6d3f', marginTop:15}}>Forgot password?</Text>
+                <Text style={{color: COLORS.primary, marginTop:15}}>Forgot password?</Text>
             </TouchableOpacity>
             <View style={styles.button}>
                 <TouchableOpacity
@@ -216,20 +218,20 @@ const SignInScreen = ({navigation}) => {
                     style={styles.signIn}
                 >
                         <Text style={[styles.textSign, {
-                            color: '#Fc6d3f'
+                            color: COLORS.primary
                         }]}>Sign In</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => navigation.navigate('SignUpScreen')}
                     style={[styles.signIn, {
-                        borderColor: '#Fc6d3f',
+                        borderColor: COLORS.primary,
                         borderWidth: 1,
                         marginTop: 15
                     }]}
                 >
                     <Text style={[styles.textSign, {
-                        color: '#Fc6d3f'
+                        color: COLORS.primary
                     }]}>Sign Up</Text>
                 </TouchableOpacity>
             </View>
@@ -243,7 +245,7 @@ export default SignInScreen;
 const styles = StyleSheet.create({
     container: {
       flex: 1, 
-      backgroundColor: '#Fc6d3f'
+      backgroundColor: COLORS.primary
     },
     header: {
         flex: 1,
