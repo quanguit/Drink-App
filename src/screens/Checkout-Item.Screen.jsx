@@ -15,14 +15,13 @@ import {
 } from "../redux/cart/cart.selectors.js";
 import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
+import Header from "../component/bar/header";
 
 const CheckoutScreen = ({ cartItems, total }) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.header}>
-          <Text style={styles.headerName}>Ordered</Text>
-        </View>
+        <Header/>
         <FlatList
           data={cartItems}
           showsVerticalScrollIndicator={false}
@@ -35,7 +34,7 @@ const CheckoutScreen = ({ cartItems, total }) => {
               return (
                 <View>
                   <Text style={styles.textError}>
-                    Chưa có sản phẩm nào được thêm vào giỏ hàng
+                  Your cart is empty. Let's order something !
                   </Text>
                 </View>
               );
@@ -43,7 +42,7 @@ const CheckoutScreen = ({ cartItems, total }) => {
               return (
                 <View>
                   <View style={styles.cart}>
-                    <Text style={styles.textSuccess}>Tổng tiền</Text>
+                    <Text style={styles.textSuccess}>Total</Text>
                     <Text style={styles.textSuccess}>{total}đ</Text>
                   </View>
                 </View>

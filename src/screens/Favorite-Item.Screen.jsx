@@ -15,14 +15,13 @@ import {
 } from "../redux/cart/cart.selectors.js";
 import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
+import Header from "../component/bar/header";
 
 const FavoriteItemScreen = ({ cartItemsFavorite, cartItemsCount }) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.header}>
-          <Text style={styles.headerName}>Favorite</Text>
-        </View>
+        <Header/>
         <FlatList
           data={cartItemsFavorite}
           showsVerticalScrollIndicator={false}
@@ -35,7 +34,7 @@ const FavoriteItemScreen = ({ cartItemsFavorite, cartItemsCount }) => {
               return (
                 <View>
                   <Text style={styles.textError}>
-                    Chưa có sản phẩm nào được bạn yêu thích
+                    You haven't logged into your account yet !
                   </Text>
                 </View>
               );

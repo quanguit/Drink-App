@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import { Feather } from '@expo/vector-icons';
+import Header from "../component/bar/header";
 
 const HomeScreen = () => {
 	const image = { uri: require('../../assets/images/bg1.jpg') };
@@ -47,6 +48,7 @@ const HomeScreen = () => {
 	]);
 	return (
 		<View style={{ flexGrow: 1, height: '100%' }}>
+			<Header/>
 			<View>
 				<ImageBackground
 					source={image}
@@ -71,18 +73,6 @@ const HomeScreen = () => {
 							style={{ position: 'absolute', top: 26, right: 60 }}
 						/>
 					</View>
-					<Feather
-						name='menu'
-						size={22}
-						color='#fff'
-						style={{ position: 'absolute', top: 40, left: 16 }}
-					/>
-					<Feather
-						name='bell'
-						size={22}
-						color='#fff'
-						style={{ position: 'absolute', top: 40, right: 30 }}
-					/>
 				</ImageBackground>
 			</View>
 			<ScrollView showsVerticalScrollIndicator={false}>

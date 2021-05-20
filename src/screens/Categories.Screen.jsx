@@ -13,12 +13,9 @@ import axios from "axios";
 import SearchBar from "../component/bar/search-bar";
 import { COLORS, FONTS, SIZES } from "../containts/theme.js";
 import CollectionItem from "../component/collection-item/collection-item";
-import { createStructuredSelector } from "reselect";
-import { selectCategory } from "../redux/category/category.selectors";
-import { selectCollection } from "../redux/collection/collection.selector.js";
-import { connect } from "react-redux";
+import Header from "../component/bar/header";
 
-const CategoryScreen = ({ categories, collections }) => {
+const CategoryScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState([]);
   const [collection, setCollection] = useState([]);
@@ -95,28 +92,21 @@ const CategoryScreen = ({ categories, collections }) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView style={styles.container}>
+        <Header/>
         <SearchBar handleChange={searchFilter} />
-        <View style={{ padding: SIZES.padding * 2 }}>
-          <Text style={styles.text1}>Main</Text>
-          <Text style={styles.text1}>Categories</Text>
-        </View>
         <FlatList
           data={category}
           keyExtractor={(item, index) => `${item._id}`}
           renderItem={renderItem}
           horizontal
           showsHorizontalScrollIndicator={false}
+          style={{ paddingTop: SIZES.padding * 2 }}
         />
         <CollectionItem collection={filteredCollection} />
       </SafeAreaView>
     </ScrollView>
   );
 };
-
-const mapStateToProps = createStructuredSelector({
-  categories: selectCategory,
-  collections: selectCollection,
-});
 
 const styles = StyleSheet.create({
   box1: {
@@ -141,4 +131,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps)(CategoryScreen);
+export default CategoryScreen;
