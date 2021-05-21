@@ -20,32 +20,23 @@ const CategoryScreen = () => {
   const [category, setCategory] = useState([]);
   const [collection, setCollection] = useState([]);
 
-  useEffect(() => {
-    let unMounted = false;
-    axios
-      .get("https://backend-app-lamquanghy.herokuapp.com/category")
-      .then((res) => {
-        if (!unMounted) {
-          setCategory(res.data);
-        }
-      });
-    return () => {
-      unMounted = true;
-    };
-  }, []);
+  const fetchData = () => {
+    const fetchCategory = axios.get(
+      "https://backend-app-lamquanghy.herokuapp.com/category"
+    );
+    const fetchCollection = axios.get(
+      "https://backend-app-lamquanghy.herokuapp.com/collection"
+    );
+    axios.all([fetchCategory, fetchCollection]).then((res) => {
+      const cat = res[0].data;
+      const col = res[1].data;
+      setCategory(cat);
+      setCollection(col);
+    });
+  };
 
   useEffect(() => {
-    let unMounted = false;
-    axios
-      .get("https://backend-app-lamquanghy.herokuapp.com/collection")
-      .then((res) => {
-        if (!unMounted) {
-          setCollection(res.data);
-        }
-      });
-    return () => {
-      unMounted = true;
-    };
+    fetchData();
   }, []);
 
   // listed category
@@ -92,7 +83,7 @@ const CategoryScreen = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView style={styles.container}>
-        <Header/>
+        <Header />
         <SearchBar handleChange={searchFilter} />
         <FlatList
           data={category}
