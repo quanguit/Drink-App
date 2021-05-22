@@ -5,11 +5,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import Home from "../../screens/Home.Screen";
-import Categories from "../../screens/Categories.Screen";
-import Checkout from "../../screens/Checkout-Item.Screen";
-import FavoriteItem from "../../screens/Favorite-Item.Screen";
-import Others from "../../screens/Others.Screen";
+import HomeScreen from "../../screens/Home.Screen";
+import CategoryScreen from "../../screens/Categories.Screen";
+import CheckoutScreen from "../../screens/Checkout-Item.Screen";
+import FavoriteItemScreen from "../../screens/Favorite-Item.Screen";
+import OthersScreen from "../../screens/Others.Screen";
 
 import Entypo from "react-native-vector-icons/Entypo";
 import Fontisto from "react-native-vector-icons/Fontisto";
@@ -22,100 +22,93 @@ import { COLORS } from "../../containts/theme";
 const Tabs = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-// const HomeStackScreen = () => (
-//   <Stack.Navigator>
-//     <Stack.Screen name="Home" component={Home} />
-//     <Stack.Screen name="List-Item" component={ListItem} />
-//     <Stack.Screen name="Item-Ordered" component={ItemOrdered} />
-//     <Stack.Screen name="Favorite-Item" component={FavoriteItem} />
-//     <Stack.Screen name="Others" component={Others} />
-//   </Stack.Navigator>
-// );
-
-const BottomBar = () => (
-  <NavigationContainer independent={true}>
-    <Tabs.Navigator
-      tabBarOptions={{
-        activeTintColor: COLORS.primary,
-        inactiveTintColor: COLORS.secondary,
-        showLabel: true,
-        showIcon: true,
-        labelStyle: { fontSize: 15 },
-        style: {
-          height: 65,
-          width: Dimensions.get("window").width,
-          backgroundColor: COLORS.transparent,
-          elevation: 0,
-        },
-      }}
-    >
-      <Tabs.Screen
-        name="Home"
-        component={Home}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <Entypo
-              name="home"
-              size={30}
-              color={focused ? COLORS.primary : COLORS.secondary}
-            />
-          ),
+const BottomBar = ({ currentUser }) => {
+  const YourOtherScreen = () => <OthersScreen currentUser={currentUser} />;
+  return (
+    <NavigationContainer independent={true}>
+      <Tabs.Navigator
+        tabBarOptions={{
+          activeTintColor: COLORS.primary,
+          inactiveTintColor: COLORS.secondary,
+          showLabel: true,
+          showIcon: true,
+          labelStyle: { fontSize: 15 },
+          style: {
+            height: 65,
+            width: Dimensions.get("window").width,
+            backgroundColor: COLORS.transparent,
+            elevation: 0,
+          },
         }}
-      />
-      <Tabs.Screen
-        name="Categories"
-        component={Categories}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <MaterialIcons
-              name="collections"
-              size={28}
-              color={focused ? COLORS.primary : COLORS.secondary}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Checkout"
-        component={Checkout}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <Feather
-              name="shopping-cart"
-              size={28}
-              color={focused ? COLORS.primary : COLORS.secondary}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Favorite"
-        component={FavoriteItem}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <Fontisto
-              name="heart"
-              size={25}
-              color={focused ? COLORS.primary : COLORS.secondary}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Others"
-        component={Others}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <FontAwesome
-              name="bars"
-              size={30}
-              color={focused ? COLORS.primary : COLORS.secondary}
-            />
-          ),
-        }}
-      />
-    </Tabs.Navigator>
-  </NavigationContainer>
-);
+      >
+        <Tabs.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Entypo
+                name="home"
+                size={30}
+                color={focused ? COLORS.primary : COLORS.secondary}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="Categories"
+          component={CategoryScreen}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <MaterialIcons
+                name="collections"
+                size={28}
+                color={focused ? COLORS.primary : COLORS.secondary}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="Checkout"
+          component={CheckoutScreen}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Feather
+                name="shopping-cart"
+                size={28}
+                color={focused ? COLORS.primary : COLORS.secondary}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="Favorite"
+          component={FavoriteItemScreen}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Fontisto
+                name="heart"
+                size={25}
+                color={focused ? COLORS.primary : COLORS.secondary}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="Others"
+          component={YourOtherScreen}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <FontAwesome
+                name="bars"
+                size={30}
+                color={focused ? COLORS.primary : COLORS.secondary}
+              />
+            ),
+          }}
+        />
+      </Tabs.Navigator>
+    </NavigationContainer>
+  );
+};
 
 export default BottomBar;

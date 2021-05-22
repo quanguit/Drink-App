@@ -21,12 +21,12 @@ const CheckoutScreen = ({ cartItems, total }) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView style={{ flex: 1 }}>
-        <Header/>
+        <Header />
         <FlatList
           data={cartItems}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 80 }}
-          keyExtractor={(item, index) => `${item._id}`}
+          keyExtractor={(item, index) => `${item.product_id}`}
           renderItem={({ item }) => <CheckoutItem cartItem={item} />}
           ListFooterComponentStyle={{ paddingHorizontal: 25, marginTop: 20 }}
           ListFooterComponent={() => {
@@ -34,7 +34,7 @@ const CheckoutScreen = ({ cartItems, total }) => {
               return (
                 <View>
                   <Text style={styles.textError}>
-                  Your cart is empty. Let's order something !
+                    Your cart is empty. Let's order something !
                   </Text>
                 </View>
               );

@@ -9,30 +9,25 @@ import {
   ScrollView,
   Image,
 } from "react-native";
-import axios from "axios";
 import SearchBar from "../component/bar/search-bar";
 import { COLORS, FONTS, SIZES } from "../containts/theme.js";
 import CollectionItem from "../component/collection-item/collection-item";
 import Header from "../component/bar/header";
+import { firestore } from "../firebase/firebase";
 
 const CategoryScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState([]);
   const [collection, setCollection] = useState([]);
 
-  const fetchData = () => {
-    const fetchCategory = axios.get(
-      "https://backend-app-lamquanghy.herokuapp.com/category"
-    );
-    const fetchCollection = axios.get(
-      "https://backend-app-lamquanghy.herokuapp.com/collection"
-    );
-    axios.all([fetchCategory, fetchCollection]).then((res) => {
-      const cat = res[0].data;
-      const col = res[1].data;
-      setCategory(cat);
-      setCollection(col);
-    });
+  const fetchData = async () => {
+    const fetchCategory = await firestore.collection("category").get();
+    const fetchCollection = await firestore.collection("collection").get();
+    const cat = fetchCategory.docs.map((a) => a.data());
+    const col = fetchCollection.docs.map((a) => a.data());
+    await Promise.all([cat, col]);
+    setCategory(cat);
+    setCollection(col);
   };
 
   useEffect(() => {
@@ -42,13 +37,12 @@ const CategoryScreen = () => {
   // listed category
   const onSelectCagory = (item) => {
     const fetchCollection = async () => {
-      await axios
-        .get(
-          `https://backend-app-lamquanghy.herokuapp.com/collection/${item._id}`
-        )
-        .then((res) => {
-          setCollection(res.data);
-        });
+      const fetchCollection = await firestore
+        .collection("collection")
+        .where("id", "==", item.id)
+        .get();
+      const col = fetchCollection.docs.map((a) => a.data());
+      setCollection(col);
     };
     fetchCollection();
   };
@@ -87,7 +81,7 @@ const CategoryScreen = () => {
         <SearchBar handleChange={searchFilter} />
         <FlatList
           data={category}
-          keyExtractor={(item, index) => `${item._id}`}
+          keyExtractor={(item, index) => `${item.id}`}
           renderItem={renderItem}
           horizontal
           showsHorizontalScrollIndicator={false}

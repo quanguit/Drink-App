@@ -21,12 +21,12 @@ const FavoriteItemScreen = ({ cartItemsFavorite, cartItemsCount }) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView style={{ flex: 1 }}>
-        <Header/>
+        <Header />
         <FlatList
           data={cartItemsFavorite}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 80 }}
-          keyExtractor={(item, index) => `${item._id}`}
+          keyExtractor={(item, index) => `${item.product_id}`}
           renderItem={({ item }) => <FavoriteItem cartItem={item} />}
           ListFooterComponentStyle={{ paddingHorizontal: 25, marginTop: 20 }}
           ListFooterComponent={() => {

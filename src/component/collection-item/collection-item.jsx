@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect,  } from "react";
 import {
   TouchableOpacity,
   Image,
@@ -71,7 +71,7 @@ const CollectionItem = ({ collection, addItem, addItemToFavorite }) => {
   return (
     <FlatList
       data={formatData(collection, numColumns)}
-      keyExtractor={(item, index) => `${item._id}`}
+      keyExtractor={(item, index) => `${item.product_id}`}
       renderItem={({ item }) => <Collection item={item} />}
       numColumns={numColumns}
       vertical
