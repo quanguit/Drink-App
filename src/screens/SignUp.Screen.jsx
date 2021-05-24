@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -20,54 +20,101 @@ const SignUpScreen = ({ navigation }) => {
     email: "",
     password: "",
     confirmPassword: "",
-    check_Username: false,
-    check_Email: false,
+    check_Email: true,
+    check_Password: true,
+    check_ConfirmPassword: true,
   });
 
-  const getUsername = (name) => {
-    if (name.length !== 0) {
-      setData({
-        ...data,
-        displayName: name,
-        check_Username: true,
-      });
-    } else {
-      setData({
-        ...data,
-        displayName: name,
-        check_Username: false,
-      });
+  const checkValid = async (val, type) => {
+    // const patternMail = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    // const patternPassword = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]\w{5}$/;
+    const alpha = /^[a-zA-Z]+$/;
+    const patternMail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (type === "username") {
+      if (alpha.test(val)) {
+        setData({
+          ...data,
+          displayName: val,
+        });
+      }
+    } else if (type === "email") {
+      if (patternMail.test(val)) {
+        setData({
+          ...data,
+          email: val,
+          check_Email: true,
+        });
+      } else {
+        setData({
+          ...data,
+          check_Email: false,
+        });
+      }
+    } else if (type === "password") {
+      if (val.length > 5) {
+        setData({
+          ...data,
+          password: val,
+          check_Password: true,
+        });
+      } else {
+        setData({
+          ...data,
+          check_Password: false,
+        });
+      }
+    } else if (type === "confirmpassword") {
+      if (val === data.password) {
+        setData({
+          ...data,
+          confirmPassword: val,
+          check_ConfirmPassword: true,
+        });
+      } else {
+        setData({
+          ...data,
+          check_ConfirmPassword: false,
+        });
+      }
     }
   };
 
-  const getEmail = (email) => {
-    if (email.length !== 0) {
-      setData({
-        ...data,
-        username: email,
-        check_Email: true,
-      });
+  const { displayName, email, password } = data;
+  const handleSignUp = async () => {
+    if (
+      data.check_Email === true &&
+      data.check_Password === true &&
+      data.check_ConfirmPassword === true
+    ) {
+      try {
+        const { user } = await auth.createUserWithEmailAndPassword(
+          email,
+          password
+        );
+        await createUserProfileDocument(user, { displayName: displayName });
+
+        // clear our form
+        setData({
+          displayName: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+          check_Email: true,
+          check_Password: true,
+          check_ConfirmPassword: true,
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
     } else {
-      setData({
-        ...data,
-        username: email,
-        check_Email: false,
-      });
+      if (data.check_Email === false) {
+        alert("Invilid your email!");
+      } else if (data.check_Password === false) {
+        alert("Invilid your password!");
+      } else if (data.check_ConfirmPassword === false) {
+        alert("Confirm password don't match!");
+      }
     }
-  };
-
-  const getPassword = (pass) => {
-    setData({
-      ...data,
-      password: pass,
-    });
-  };
-
-  const getConfirmPassword = (cfpass) => {
-    setData({
-      ...data,
-      confirmPassword: cfpass,
-    });
   };
 
   return (
@@ -85,8 +132,7 @@ const SignUpScreen = ({ navigation }) => {
               placeholder="Your Username"
               style={styles.textInput}
               autoCapitalize="none"
-              autoCompleteType="username"
-              onChangeText={(name) => getUsername(name)}
+              onChangeText={(val) => checkValid(val, "username")}
             />
           </View>
         </View>
@@ -106,10 +152,12 @@ const SignUpScreen = ({ navigation }) => {
           <View style={{ width: "90%", marginLeft: 10 }}>
             <TextInput
               placeholder="Your Email"
-              style={styles.textInput}
+              style={[
+                styles.textInput,
+                !data.check_Email ? styles.error : null,
+              ]}
               autoCapitalize="none"
-              autoCompleteType="email"
-              onChangeText={(email) => getEmail(email)}
+              onChangeText={(val) => checkValid(val, "email")}
             />
           </View>
         </View>
@@ -129,10 +177,12 @@ const SignUpScreen = ({ navigation }) => {
           <View style={{ width: "90%", marginLeft: 10 }}>
             <TextInput
               placeholder="Your Password"
-              style={styles.textInput}
+              style={[
+                styles.textInput,
+                !data.check_Password ? styles.error : null,
+              ]}
               autoCapitalize="none"
-              autoCompleteType="password"
-              onChangeText={(pass) => getPassword(pass)}
+              onChangeText={(val) => checkValid(val, "password")}
               secureTextEntry={true}
             />
           </View>
@@ -153,10 +203,12 @@ const SignUpScreen = ({ navigation }) => {
           <View style={{ width: "90%", marginLeft: 10 }}>
             <TextInput
               placeholder="Confirm Your Password"
-              style={styles.textInput}
+              style={[
+                styles.textInput,
+                !data.check_ConfirmPassword ? styles.error : null,
+              ]}
               autoCapitalize="none"
-              autoCompleteType="password"
-              onChangeText={(cfpass) => getConfirmPassword(cfpass)}
+              onChangeText={(val) => checkValid(val, "confirmpassword")}
               secureTextEntry={true}
             />
           </View>
@@ -177,7 +229,10 @@ const SignUpScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.button}>
-          <TouchableOpacity style={styles.Screen}>
+          <TouchableOpacity
+            style={[styles.signUp, { marginTop: 10 }]}
+            onPress={() => handleSignUp()}
+          >
             <Text style={styles.buttonTitle}>Sign Up</Text>
           </TouchableOpacity>
 
@@ -262,5 +317,8 @@ const styles = StyleSheet.create({
   },
   color_textPrivate: {
     color: "grey",
+  },
+  error: {
+    borderColor: "red",
   },
 });

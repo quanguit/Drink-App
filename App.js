@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BottomBar from "./src/component/bar/bottom-bar";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
@@ -10,42 +10,28 @@ const middlewares = [logger];
 const enhancers = applyMiddleware(...middlewares);
 const store = createStore(rootReducer, enhancers);
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      currentUser: null,
-    };
-  }
+const App = () => {
+  const [currentUser, setCurrentUser] = useState(null);
 
-  unsubscribeFromAuth = null;
-
-  componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+  useEffect(() => {
+    auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
 
         userRef.onSnapshot((snapshot) => {
-          this.setState({
-            currentUser: {
-              id: snapshot.id,
-              ...snapshot.data(),
-            },
+          setCurrentUser({
+            id: snapshot.id,
+            ...snapshot.data(),
           });
         });
       }
-      this.setState({ currentUser: userAuth });
+      setCurrentUser(userAuth);
     });
-  }
-
-  componentWillUnMount() {
-    this.unsubscribeFromAuth();
-  }
-
-  render() {
-    return <BottomBar currentUser={this.state.currentUser} />;
-  }
-}
+  }, []);
+  const init = store.getState();
+  console.log(init);
+  return <BottomBar currentUser={currentUser} />;
+};
 
 export default () => {
   return (

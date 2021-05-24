@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -11,9 +11,73 @@ import * as Animatable from "react-native-animatable";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import Feather from "react-native-vector-icons/Feather";
 import { COLORS } from "../containts/theme";
-import { signInWithGoogle } from "../firebase/firebase";
+import { signInWithGoogle, auth } from "../firebase/firebase";
 
 const SignInScreen = ({ navigation }) => {
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+    check_Email: true,
+    check_Password: true,
+  });
+
+  const checkValid = async (val, type) => {
+    const patternMail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (type === "email") {
+      if (patternMail.test(val)) {
+        setData({
+          ...data,
+          email: val,
+          check_Email: true,
+        });
+      } else {
+        setData({
+          ...data,
+          check_Email: false,
+        });
+      }
+    } else if (type === "password") {
+      if (val.length > 5) {
+        setData({
+          ...data,
+          password: val,
+          check_Password: true,
+        });
+      } else {
+        setData({
+          ...data,
+          check_Password: false,
+        });
+      }
+    }
+  };
+
+  const { email, password } = data;
+  const handleSignIn = async () => {
+    if (data.check_Email === true && data.check_Password === true) {
+      try {
+        await auth.signInWithEmailAndPassword(email, password);
+
+        // clear our form
+        setData({
+          email: "",
+          password: "",
+          check_Email: true,
+          check_Password: true,
+        });
+      } catch (error) {
+        alert("Your email or password was wrong!");
+        console.log(error.message);
+      }
+    } else {
+      if (data.check_Email === false) {
+        alert("Invilid your email!");
+      } else if (data.check_Password === false) {
+        alert("Invilid your password!");
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#Fc6d3f" barStyle="light-content" />
@@ -28,9 +92,12 @@ const SignInScreen = ({ navigation }) => {
             <TextInput
               placeholder="Your Username"
               placeholderTextColor="#666666"
-              style={styles.textInput}
+              style={[
+                styles.textInput,
+                !data.check_Email ? styles.error : null,
+              ]}
               autoCapitalize="none"
-              autoCompleteType="email"
+              onChangeText={(val) => checkValid(val, "email")}
             />
           </View>
         </View>
@@ -51,9 +118,12 @@ const SignInScreen = ({ navigation }) => {
             <TextInput
               placeholder="Your Password"
               placeholderTextColor="#666666"
-              style={styles.textInput}
+              style={[
+                styles.textInput,
+                !data.check_Password ? styles.error : null,
+              ]}
               autoCapitalize="none"
-              autoCompleteType="password"
+              onChangeText={(val) => checkValid(val, "password")}
               secureTextEntry={true}
             />
           </View>
@@ -63,7 +133,10 @@ const SignInScreen = ({ navigation }) => {
           <Text style={styles.textPrivate}>Forgot password?</Text>
         </TouchableOpacity>
         <View style={styles.button}>
-          <TouchableOpacity style={styles.signIn}>
+          <TouchableOpacity
+            style={styles.signIn}
+            onPress={() => handleSignIn()}
+          >
             <Text style={styles.buttonTitle}>Sign In</Text>
           </TouchableOpacity>
 
@@ -78,9 +151,7 @@ const SignInScreen = ({ navigation }) => {
             style={[styles.signIn, { marginTop: 10 }]}
             onPress={() => navigation.push("SignUpScreen")}
           >
-            <Text style={styles.buttonTitle} onPress={() => check_Validate()}>
-              Sign Up
-            </Text>
+            <Text style={styles.buttonTitle}>Sign Up</Text>
           </TouchableOpacity>
         </View>
       </Animatable.View>
@@ -154,5 +225,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 20,
     color: "grey",
+  },
+  error: {
+    borderColor: "red",
   },
 });
