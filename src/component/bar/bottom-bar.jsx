@@ -33,6 +33,7 @@ const BottomBar = ({ currentUser }) => {
           showLabel: true,
           showIcon: true,
           labelStyle: { fontSize: 15 },
+
           style: {
             height: 65,
             width: Dimensions.get("window").width,

@@ -12,16 +12,15 @@ var config = {
   measurementId: "G-864W0KH7ML",
 };
 
-export const createUserProfileDocument = async (userAuth, additionalData) => {
-  if (!userAuth) return;
+export const generateUserDocument = async (user, additionalData) => {
+  if (!user) return;
 
-  const userRef = firestore.doc(`user/${userAuth.uid}`);
-  const snapShot = await userRef.get();
+  const userRef = firestore.doc(`user/${user.uid}`);
+  const snapshot = await userRef.get();
 
-  if (!snapShot.exists) {
-    const { displayName, email } = userAuth;
+  if (!snapshot.exists) {
+    const { email, displayName } = user;
     const createAt = new Date();
-
     try {
       await userRef.set({
         displayName,
@@ -30,10 +29,23 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         ...additionalData,
       });
     } catch (error) {
-      console.log("error creating user", error.message);
+      console.error("Error creating user document", error);
     }
   }
-  return userRef;
+  return getUserDocument(user.uid);
+};
+
+const getUserDocument = async (uid) => {
+  if (!uid) return null;
+  try {
+    const userDocument = await firestore.doc(`user/${uid}`).get();
+    return {
+      id: uid,
+      ...userDocument.data(),
+    };
+  } catch (error) {
+    console.error("Error fetching user", error);
+  }
 };
 
 firebase.initializeApp(config);

@@ -9,7 +9,7 @@ const OthersScreen = ({ currentUser }) => {
   return (
     <NavigationContainer independent={true}>
       {currentUser ? (
-        <View>
+        <View style={{ flex: 1 }}>
           <Header />
           <ProfileScreen currentUser={currentUser} />
         </View>

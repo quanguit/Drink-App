@@ -11,7 +11,7 @@ import * as Animatable from "react-native-animatable";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import Feather from "react-native-vector-icons/Feather";
 import { COLORS } from "../containts/theme";
-import { signInWithGoogle, auth } from "../firebase/firebase";
+import { auth, signInWithGoogle } from "../firebase/firebase";
 
 const SignInScreen = ({ navigation }) => {
   const [data, setData] = useState({
@@ -20,6 +20,7 @@ const SignInScreen = ({ navigation }) => {
     check_Email: true,
     check_Password: true,
   });
+  const [emailHasBeenSent, setEmailHasBeenSent] = useState(false);
 
   const checkValid = async (val, type) => {
     const patternMail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -53,6 +54,7 @@ const SignInScreen = ({ navigation }) => {
   };
 
   const { email, password } = data;
+
   const handleSignIn = async () => {
     if (data.check_Email === true && data.check_Password === true) {
       try {
@@ -66,8 +68,8 @@ const SignInScreen = ({ navigation }) => {
           check_Password: true,
         });
       } catch (error) {
-        alert("Your email or password was wrong!");
-        console.log(error.message);
+        // alert("Your email or password was wrong!");
+        alert(`${error.message}`);
       }
     } else {
       if (data.check_Email === false) {
@@ -76,6 +78,20 @@ const SignInScreen = ({ navigation }) => {
         alert("Invilid your password!");
       }
     }
+  };
+
+  const sendResetEmail = () => {
+    auth
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        setEmailHasBeenSent(true);
+        setTimeout(() => {
+          setEmailHasBeenSent(false);
+        }, 3000);
+      })
+      .catch(() => {
+        alert("Error resetting password");
+      });
   };
 
   return (
@@ -129,7 +145,7 @@ const SignInScreen = ({ navigation }) => {
           </View>
         </View>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => sendResetEmail()}>
           <Text style={styles.textPrivate}>Forgot password?</Text>
         </TouchableOpacity>
         <View style={styles.button}>
@@ -223,8 +239,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     marginTop: 20,
-    fontSize: 20,
-    color: "grey",
+    fontSize: 15,
+    color: COLORS.darkgray,
+    textDecorationLine: "underline",
   },
   error: {
     borderColor: "red",

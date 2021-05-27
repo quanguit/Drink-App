@@ -3,33 +3,27 @@ import BottomBar from "./src/component/bar/bottom-bar";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./src/redux/root-reducer";
-import logger from "redux-logger";
-import { auth, createUserProfileDocument } from "./src/firebase/firebase.jsx";
+import { createLogger } from "redux-logger";
+import thunkMiddleware from "redux-thunk";
+import { auth, generateUserDocument } from "./src/firebase/firebase.jsx";
 
-const middlewares = [logger];
-const enhancers = applyMiddleware(...middlewares);
-const store = createStore(rootReducer, enhancers);
+const loggerMiddleware = createLogger();
+const store = createStore(
+  rootReducer,
+  applyMiddleware(thunkMiddleware, loggerMiddleware)
+);
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     auth.onAuthStateChanged(async (userAuth) => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
-
-        userRef.onSnapshot((snapshot) => {
-          setCurrentUser({
-            id: snapshot.id,
-            ...snapshot.data(),
-          });
-        });
-      }
-      setCurrentUser(userAuth);
+      const user = await generateUserDocument(userAuth);
+      setCurrentUser(user);
     });
   }, []);
-  const init = store.getState();
-  console.log(init);
+
+  console.log(currentUser);
   return <BottomBar currentUser={currentUser} />;
 };
 

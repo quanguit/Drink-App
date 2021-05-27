@@ -64,7 +64,7 @@ const ProfileScreen = ({ currentUser }) => {
             <Text style={styles.menuItemText}>Support</Text>
           </View>
         </TouchableRipple>
-        <TouchableRipple onPress={() => {}}>
+        <TouchableRipple>
           <View style={styles.menuItem}>
             <Ionicons name="settings-outline" color="#FF6347" size={25} />
             <Text style={styles.menuItemText}>Settings</Text>

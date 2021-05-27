@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -12,7 +12,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import { COLORS } from "../containts/theme.js";
-import { auth, createUserProfileDocument } from "../firebase/firebase";
+import { auth, generateUserDocument } from "../firebase/firebase";
 
 const SignUpScreen = ({ navigation }) => {
   const [data, setData] = useState({
@@ -91,21 +91,21 @@ const SignUpScreen = ({ navigation }) => {
           email,
           password
         );
-        await createUserProfileDocument(user, { displayName: displayName });
-
-        // clear our form
-        setData({
-          displayName: "",
-          email: "",
-          password: "",
-          confirmPassword: "",
-          check_Email: true,
-          check_Password: true,
-          check_ConfirmPassword: true,
-        });
+        generateUserDocument(user, { displayName });
       } catch (error) {
-        console.log(error.message);
+        alert("Error Signing up with email and password");
       }
+
+      // clear our form
+      setData({
+        displayName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        check_Email: true,
+        check_Password: true,
+        check_ConfirmPassword: true,
+      });
     } else {
       if (data.check_Email === false) {
         alert("Invilid your email!");
