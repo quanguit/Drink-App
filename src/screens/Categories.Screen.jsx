@@ -14,11 +14,13 @@ import { COLORS, FONTS, SIZES } from "../containts/theme.js";
 import CollectionItem from "../component/collection-item/collection-item";
 import Header from "../component/bar/header";
 import { firestore } from "../firebase/firebase";
+import { FadeLoader } from "react-spinners";
 
 const CategoryScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState([]);
   const [collection, setCollection] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async () => {
     const fetchCategory = await firestore.collection("category").get();
@@ -31,7 +33,10 @@ const CategoryScreen = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    setTimeout(() => {
+      fetchData();
+      setIsLoading(true);
+    }, 500);
   }, []);
 
   // listed category
@@ -74,23 +79,34 @@ const CategoryScreen = () => {
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <SafeAreaView style={styles.container}>
+  if (isLoading) {
+    return (
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <SafeAreaView style={styles.container}>
+          <Header />
+          <SearchBar handleChange={searchFilter} />
+          <FlatList
+            data={category}
+            keyExtractor={(item, index) => `${item.id}`}
+            renderItem={renderItem}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={{ paddingTop: SIZES.padding * 2 }}
+          />
+          <CollectionItem collection={filteredCollection} />
+        </SafeAreaView>
+      </ScrollView>
+    );
+  } else {
+    return (
+      <View style={{ flex: 1 }}>
         <Header />
-        <SearchBar handleChange={searchFilter} />
-        <FlatList
-          data={category}
-          keyExtractor={(item, index) => `${item.id}`}
-          renderItem={renderItem}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={{ paddingTop: SIZES.padding * 2 }}
-        />
-        <CollectionItem collection={filteredCollection} />
-      </SafeAreaView>
-    </ScrollView>
-  );
+        <View style={styles.loading}>
+          <FadeLoader size={24} color={COLORS.primary} loading />
+        </View>
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
@@ -113,6 +129,11 @@ const styles = StyleSheet.create({
     ...FONTS.h1,
     fontSize: 40,
     paddingTop: 20,
+  },
+  loading: {
+    justifyContent: "center",
+    marginTop: 300,
+    marginLeft: 160,
   },
 });
 
