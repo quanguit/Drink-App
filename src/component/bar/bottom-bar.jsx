@@ -24,6 +24,7 @@ const Stack = createStackNavigator();
 
 const BottomBar = ({ currentUser }) => {
   const YourOtherScreen = () => <OthersScreen currentUser={currentUser} />;
+  const YourCheckoutScreen = () => <CheckoutScreen currentUser={currentUser} />;
   return (
     <NavigationContainer independent={true}>
       <Tabs.Navigator
@@ -70,7 +71,7 @@ const BottomBar = ({ currentUser }) => {
         />
         <Tabs.Screen
           name="Checkout"
-          component={CheckoutScreen}
+          component={YourCheckoutScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <Feather

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -16,8 +16,9 @@ import {
 import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
 import Header from "../component/bar/header";
+import StripeCheckoutButton from "../component/stripe-button/stripe-button";
 
-const CheckoutScreen = ({ cartItems, total }) => {
+const CheckoutScreen = ({ cartItems, total, currentUser, clearCart }) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -45,6 +46,13 @@ const CheckoutScreen = ({ cartItems, total }) => {
                     <Text style={styles.textSuccess}>Total</Text>
                     <Text style={styles.textSuccess}>{total}đ</Text>
                   </View>
+                  {currentUser ? (
+                    <StripeCheckoutButton price={total} />
+                  ) : (
+                    <Text style={styles.textError}>
+                      You must be logged into your account to pay!
+                    </Text>
+                  )}
                 </View>
               );
             }
@@ -59,6 +67,8 @@ const mapStateToProps = createStructuredSelector({
   cartItems: selectCartItems,
   total: selectCartTotal,
 });
+
+export default connect(mapStateToProps)(CheckoutScreen);
 
 const styles = StyleSheet.create({
   header: {
@@ -89,5 +99,3 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-
-export default connect(mapStateToProps)(CheckoutScreen);

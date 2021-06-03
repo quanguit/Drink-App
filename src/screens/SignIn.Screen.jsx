@@ -17,66 +17,39 @@ const SignInScreen = ({ navigation }) => {
   const [data, setData] = useState({
     email: "",
     password: "",
-    check_Email: true,
-    check_Password: true,
   });
   const [emailHasBeenSent, setEmailHasBeenSent] = useState(false);
 
   const checkValid = async (val, type) => {
-    const patternMail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (type === "email") {
-      if (patternMail.test(val)) {
-        setData({
-          ...data,
-          email: val,
-          check_Email: true,
-        });
-      } else {
-        setData({
-          ...data,
-          check_Email: false,
-        });
-      }
+      setData({
+        ...data,
+        email: val,
+      });
     } else if (type === "password") {
-      if (val.length > 5) {
-        setData({
-          ...data,
-          password: val,
-          check_Password: true,
-        });
-      } else {
-        setData({
-          ...data,
-          check_Password: false,
-        });
-      }
+      setData({
+        ...data,
+        password: val,
+      });
     }
+  };
+
+  const resetForm = () => {
+    setData({
+      email: "",
+      password: "",
+    });
   };
 
   const { email, password } = data;
 
   const handleSignIn = async () => {
-    if (data.check_Email === true && data.check_Password === true) {
-      try {
-        await auth.signInWithEmailAndPassword(email, password);
-
-        // clear our form
-        setData({
-          email: "",
-          password: "",
-          check_Email: true,
-          check_Password: true,
-        });
-      } catch (error) {
-        // alert("Your email or password was wrong!");
-        alert(`${error.message}`);
-      }
-    } else {
-      if (data.check_Email === false) {
-        alert("Invilid your email!");
-      } else if (data.check_Password === false) {
-        alert("Invilid your password!");
-      }
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      resetForm();
+    } catch (error) {
+      // alert("Your email or password was wrong!");
+      alert(`${error.message}`);
     }
   };
 
@@ -108,10 +81,7 @@ const SignInScreen = ({ navigation }) => {
             <TextInput
               placeholder="Your Username"
               placeholderTextColor="#666666"
-              style={[
-                styles.textInput,
-                !data.check_Email ? styles.error : null,
-              ]}
+              style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(val) => checkValid(val, "email")}
             />
@@ -134,10 +104,7 @@ const SignInScreen = ({ navigation }) => {
             <TextInput
               placeholder="Your Password"
               placeholderTextColor="#666666"
-              style={[
-                styles.textInput,
-                !data.check_Password ? styles.error : null,
-              ]}
+              style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(val) => checkValid(val, "password")}
               secureTextEntry={true}
@@ -239,11 +206,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     marginTop: 20,
-    fontSize: 15,
-    color: COLORS.darkgray,
-    textDecorationLine: "underline",
-  },
-  error: {
-    borderColor: "red",
+    fontSize: 20,
+    color: "grey",
   },
 });

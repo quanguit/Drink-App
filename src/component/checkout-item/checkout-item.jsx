@@ -53,6 +53,8 @@ const mapDispatchToProps = (dispatch) => ({
   clearItem: (item) => dispatch(clearItemFromCart(item)),
 });
 
+export default connect(null, mapDispatchToProps)(CheckoutItem);
+
 const styles = StyleSheet.create({
   cartCard: {
     height: 100,
@@ -101,4 +103,3 @@ const styles = StyleSheet.create({
     color: COLORS.white,
   },
 });
-export default connect(null, mapDispatchToProps)(CheckoutItem);

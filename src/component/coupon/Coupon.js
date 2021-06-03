@@ -21,6 +21,9 @@ const Coupon = ({ icon, title, desc }) => {
     </View>
   );
 };
+
+export default Coupon;
+
 const styles = StyleSheet.create({
   container: {
     height: 100,
@@ -65,4 +68,3 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
 });
-export default Coupon;

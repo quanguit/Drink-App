@@ -18,6 +18,8 @@ const SearchBar = ({ handleChange }) => (
   </SafeAreaView>
 );
 
+export default SearchBar;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -39,5 +41,3 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.radius,
   },
 });
-
-export default SearchBar;

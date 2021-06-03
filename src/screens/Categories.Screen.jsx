@@ -109,6 +109,8 @@ const CategoryScreen = () => {
   }
 };
 
+export default CategoryScreen;
+
 const styles = StyleSheet.create({
   box1: {
     marginTop: SIZES.radius,
@@ -136,5 +138,3 @@ const styles = StyleSheet.create({
     marginLeft: 160,
   },
 });
-
-export default CategoryScreen;

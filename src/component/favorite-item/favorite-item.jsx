@@ -31,6 +31,8 @@ const mapDispatchToProps = (dispatch) => ({
   removeItemFromFavorite: (item) => dispatch(removeItemFromFavorite(item)),
 });
 
+export default connect(null, mapDispatchToProps)(FavoriteItem);
+
 const styles = StyleSheet.create({
   cartCard: {
     height: 100,
@@ -54,4 +56,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-export default connect(null, mapDispatchToProps)(FavoriteItem);

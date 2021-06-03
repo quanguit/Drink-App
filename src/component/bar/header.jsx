@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { COLORS, FONTS } from "../../containts/theme";
 import { Feather } from "@expo/vector-icons";
 
-export default function Header() {
+const Header = () => {
   return (
     <View style={styles.header}>
       <View>
@@ -12,7 +12,9 @@ export default function Header() {
       <Feather name="bell" size={22} color="#fff" style={styles.headerName1} />
     </View>
   );
-}
+};
+
+export default Header;
 
 const styles = StyleSheet.create({
   header: {

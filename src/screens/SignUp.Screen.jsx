@@ -20,100 +20,57 @@ const SignUpScreen = ({ navigation }) => {
     email: "",
     password: "",
     confirmPassword: "",
-    check_Email: true,
-    check_Password: true,
-    check_ConfirmPassword: true,
   });
 
   const checkValid = async (val, type) => {
-    // const patternMail = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-    // const patternPassword = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]\w{5}$/;
-    const alpha = /^[a-zA-Z]+$/;
-    const patternMail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (type === "username") {
-      if (alpha.test(val)) {
-        setData({
-          ...data,
-          displayName: val,
-        });
-      }
+      setData({
+        ...data,
+        displayName: val,
+      });
     } else if (type === "email") {
-      if (patternMail.test(val)) {
-        setData({
-          ...data,
-          email: val,
-          check_Email: true,
-        });
-      } else {
-        setData({
-          ...data,
-          check_Email: false,
-        });
-      }
+      setData({
+        ...data,
+        email: val,
+      });
     } else if (type === "password") {
-      if (val.length > 5) {
-        setData({
-          ...data,
-          password: val,
-          check_Password: true,
-        });
-      } else {
-        setData({
-          ...data,
-          check_Password: false,
-        });
-      }
+      setData({
+        ...data,
+        password: val,
+      });
     } else if (type === "confirmpassword") {
-      if (val === data.password) {
-        setData({
-          ...data,
-          confirmPassword: val,
-          check_ConfirmPassword: true,
-        });
-      } else {
-        setData({
-          ...data,
-          check_ConfirmPassword: false,
-        });
-      }
+      setData({
+        ...data,
+        confirmPassword: val,
+      });
     }
   };
 
-  const { displayName, email, password } = data;
-  const handleSignUp = async () => {
-    if (
-      data.check_Email === true &&
-      data.check_Password === true &&
-      data.check_ConfirmPassword === true
-    ) {
-      try {
-        const { user } = await auth.createUserWithEmailAndPassword(
-          email,
-          password
-        );
-        generateUserDocument(user, { displayName });
-      } catch (error) {
-        alert("Error Signing up with email and password");
-      }
+  const resetForm = () => {
+    setData({
+      displayName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+  };
 
-      // clear our form
-      setData({
-        displayName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        check_Email: true,
-        check_Password: true,
-        check_ConfirmPassword: true,
-      });
-    } else {
-      if (data.check_Email === false) {
-        alert("Invilid your email!");
-      } else if (data.check_Password === false) {
-        alert("Invilid your password!");
-      } else if (data.check_ConfirmPassword === false) {
-        alert("Confirm password don't match!");
-      }
+  const { displayName, email, password, confirmPassword } = data;
+  const handleSignUp = async () => {
+    if (password !== confirmPassword) {
+      alert("Password don't match");
+      return;
+    }
+
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      generateUserDocument(user, { displayName });
+      resetForm();
+    } catch (error) {
+      alert("Error Signing up with email and password");
     }
   };
 
@@ -152,10 +109,7 @@ const SignUpScreen = ({ navigation }) => {
           <View style={{ width: "90%", marginLeft: 10 }}>
             <TextInput
               placeholder="Your Email"
-              style={[
-                styles.textInput,
-                !data.check_Email ? styles.error : null,
-              ]}
+              style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(val) => checkValid(val, "email")}
             />
@@ -177,10 +131,7 @@ const SignUpScreen = ({ navigation }) => {
           <View style={{ width: "90%", marginLeft: 10 }}>
             <TextInput
               placeholder="Your Password"
-              style={[
-                styles.textInput,
-                !data.check_Password ? styles.error : null,
-              ]}
+              style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(val) => checkValid(val, "password")}
               secureTextEntry={true}
@@ -203,10 +154,7 @@ const SignUpScreen = ({ navigation }) => {
           <View style={{ width: "90%", marginLeft: 10 }}>
             <TextInput
               placeholder="Confirm Your Password"
-              style={[
-                styles.textInput,
-                !data.check_ConfirmPassword ? styles.error : null,
-              ]}
+              style={styles.textInput}
               autoCapitalize="none"
               onChangeText={(val) => checkValid(val, "confirmpassword")}
               secureTextEntry={true}
@@ -317,8 +265,5 @@ const styles = StyleSheet.create({
   },
   color_textPrivate: {
     color: "grey",
-  },
-  error: {
-    borderColor: "red",
   },
 });

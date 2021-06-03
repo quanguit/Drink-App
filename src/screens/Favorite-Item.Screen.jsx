@@ -53,6 +53,8 @@ const mapStateToProps = createStructuredSelector({
   cartItemsCount: selectCartItemsCount,
 });
 
+export default connect(mapStateToProps)(FavoriteItemScreen);
+
 const styles = StyleSheet.create({
   header: {
     paddingVertical: 20,
@@ -82,5 +84,3 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-
-export default connect(mapStateToProps)(FavoriteItemScreen);

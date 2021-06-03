@@ -24,3 +24,7 @@ export const removeItemFromFavorite = (item) => ({
   type: CartActionTypes.REMOVE_ITEM_FROM_FAVORITE,
   payload: item,
 });
+
+export const clearCart = () => ({
+  type: CartActionTypes.CLEAR_CART,
+});

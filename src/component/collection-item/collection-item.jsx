@@ -85,6 +85,8 @@ const mapDispatchToProps = (dispatch) => ({
   addItemToFavorite: (item) => dispatch(addItemToFavorite(item)),
 });
 
+export default connect(null, mapDispatchToProps)(CollectionItem);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -115,5 +117,3 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
 });
-
-export default connect(null, mapDispatchToProps)(CollectionItem);
