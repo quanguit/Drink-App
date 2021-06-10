@@ -6,10 +6,6 @@ import rootReducer from "./src/redux/root-reducer";
 import { createLogger } from "redux-logger";
 import thunkMiddleware from "redux-thunk";
 import { auth, generateUserDocument } from "./src/firebase/firebase.jsx";
-import { StyleSheet, View } from "react-native";
-import { COLORS } from "./src/containts/theme";
-import Header from "./src/component/bar/header";
-import { FadeLoader } from "react-spinners";
 
 const loggerMiddleware = createLogger();
 const store = createStore(
@@ -32,14 +28,7 @@ const App = () => {
   if (isLoading) {
     return <BottomBar currentUser={currentUser} />;
   } else {
-    return (
-      <View style={{ flex: 1 }}>
-        <Header />
-        <View style={styles.loading}>
-          <FadeLoader size={24} color={COLORS.primary} loading />
-        </View>
-      </View>
-    );
+    return null;
   }
 };
 
@@ -50,11 +39,3 @@ export default () => {
     </Provider>
   );
 };
-
-const styles = StyleSheet.create({
-  loading: {
-    justifyContent: "center",
-    marginTop: 300,
-    marginLeft: 160,
-  },
-});

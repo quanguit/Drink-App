@@ -2,11 +2,25 @@ import React from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { COLORS } from "../../containts/theme";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import { removeItemFromFavorite } from "../../redux/cart/cart.actions";
-import { connect } from "react-redux";
+import { firestore } from "../../firebase/firebase";
+import { removeCartFavorite } from "../../redux/cart/cart.utils";
 
-const FavoriteItem = ({ cartItem, removeItemFromFavorite }) => {
+const FavoriteItem = ({ cartItem, currentUser }) => {
   const { name, imageUrl } = cartItem;
+
+  const removeFavorite = async (item) => {
+    const userRef = firestore.doc(`user/${currentUser.id}`);
+    let likesList = (await userRef.get()).data().Likes;
+    let snapshot = (await userRef.get()).data();
+    try {
+      await userRef.set({
+        ...snapshot,
+        Likes: removeCartFavorite(likesList, item),
+      });
+    } catch (error) {
+      console.log("Error remove item", error);
+    }
+  };
 
   return (
     <View style={styles.cartCard}>
@@ -20,18 +34,14 @@ const FavoriteItem = ({ cartItem, removeItemFromFavorite }) => {
           size={20}
           color="#ff4d4d"
           style={{ marginRight: 10 }}
-          onPress={() => removeItemFromFavorite(cartItem)}
+          onPress={() => removeFavorite(cartItem)}
         />
       </TouchableOpacity>
     </View>
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  removeItemFromFavorite: (item) => dispatch(removeItemFromFavorite(item)),
-});
-
-export default connect(null, mapDispatchToProps)(FavoriteItem);
+export default FavoriteItem;
 
 const styles = StyleSheet.create({
   cartCard: {

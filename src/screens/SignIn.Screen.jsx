@@ -132,7 +132,9 @@ const SignInScreen = ({ navigation }) => {
 
           <TouchableOpacity
             style={[styles.signIn, { marginTop: 10 }]}
-            onPress={() => navigation.push("SignUpScreen")}
+            onPress={() =>
+              navigation.push("SignUpScreen", { name: "SignUpScreen" })
+            }
           >
             <Text style={styles.buttonTitle}>Sign Up</Text>
           </TouchableOpacity>
@@ -208,5 +210,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 20,
     color: "grey",
+    textDecorationLine: "underline",
   },
 });

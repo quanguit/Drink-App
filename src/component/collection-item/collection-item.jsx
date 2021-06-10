@@ -11,11 +11,13 @@ import {
 import { COLORS, FONTS, SIZES } from "../../containts/theme";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { connect } from "react-redux";
-import { addItem, addItemToFavorite } from "../../redux/cart/cart.actions.js";
+import { addItem } from "../../redux/cart/cart.actions.js";
+import { firestore } from "../../firebase/firebase";
+import { addItemToCartFavorite } from "../../redux/cart/cart.utils.js";
 
 const numColumns = 2;
 
-const CollectionItem = ({ collection, addItem, addItemToFavorite }) => {
+const CollectionItem = ({ collection, addItem, currentUser }) => {
   const formatData = (datalist, numColumns) => {
     const totalRows = Math.floor(datalist.length / numColumns);
     let totalLastRow = datalist.length - totalRows * numColumns;
@@ -26,6 +28,7 @@ const CollectionItem = ({ collection, addItem, addItemToFavorite }) => {
         title: "blank",
         imageUrl: "blank",
         empty: true,
+        ai,
       });
       totalLastRow++;
     }
@@ -36,6 +39,21 @@ const CollectionItem = ({ collection, addItem, addItemToFavorite }) => {
     if (item.empty) {
       return <View style={[styles.container, styles.vi]} />;
     }
+
+    const addFavorite = async (item) => {
+      const userRef = firestore.doc(`user/${currentUser.id}`);
+      let likesList = (await userRef.get()).data().Likes;
+      let snapshot = (await userRef.get()).data();
+      // check exist
+      try {
+        await userRef.set({
+          ...snapshot,
+          Likes: addItemToCartFavorite(likesList, item),
+        });
+      } catch (error) {
+        console.log("Error add item", error);
+      }
+    };
 
     return (
       <SafeAreaView style={styles.container}>
@@ -56,11 +74,15 @@ const CollectionItem = ({ collection, addItem, addItemToFavorite }) => {
           </TouchableOpacity>
           <TouchableOpacity>
             <AntDesign
-              name={item.like ? "heart" : "hearto"}
+              name="hearto"
               size={20}
               color="#ff4d4d"
               style={{ marginRight: 10 }}
-              onPress={() => addItemToFavorite(item)}
+              onPress={() => {
+                currentUser
+                  ? addFavorite(item)
+                  : alert("You haven't logged into your account yet !");
+              }}
             />
           </TouchableOpacity>
         </View>
@@ -82,7 +104,6 @@ const CollectionItem = ({ collection, addItem, addItemToFavorite }) => {
 
 const mapDispatchToProps = (dispatch) => ({
   addItem: (item) => dispatch(addItem(item)),
-  addItemToFavorite: (item) => dispatch(addItemToFavorite(item)),
 });
 
 export default connect(null, mapDispatchToProps)(CollectionItem);

@@ -39,16 +39,22 @@ export const filterItemFromCart = (cartItems, item) => {
   );
 };
 
-export const addItemToCartFavorite = (cartItems, item) => {
-  const existingCartItem = cartItems.find(
+export const addItemToCartFavorite = (likesList, item) => {
+  const existingCartItem = likesList.find(
     (cartItem) => cartItem.product_id === item.product_id
   );
-
   if (existingCartItem) {
-    return cartItems.filter(
+    likesList = likesList.filter(
       (cartItem) => cartItem.product_id !== item.product_id
     );
+  } else {
+    likesList.push(item);
   }
+  return likesList;
+};
 
-  return [...cartItems, { ...item, like: true, quantity: 1 }];
+export const removeCartFavorite = (likesList, item) => {
+  return likesList.filter(
+    (cartItem) => cartItem.product_id !== item.product_id
+  );
 };

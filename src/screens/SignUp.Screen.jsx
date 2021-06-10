@@ -186,7 +186,7 @@ const SignUpScreen = ({ navigation }) => {
 
           <TouchableOpacity
             style={[styles.signUp, { marginTop: 10 }]}
-            onPress={() => navigation.push("SignInScreen")}
+            onPress={() => navigation.push("SignUpScreen")}
           >
             <Text style={styles.buttonTitle}>Sign In</Text>
           </TouchableOpacity>

@@ -3,7 +3,6 @@ import {
   addItemToCart,
   filterItemFromCart,
   removeItemFromCart,
-  addItemToCartFavorite,
 } from "./cart.utils";
 
 const INITIAL_STATE = {
@@ -27,22 +26,6 @@ const cartReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         cartItems: filterItemFromCart(state.cartItems, action.payload),
-      };
-    case CartActionTypes.ADD_ITEM_TO_FAVORITE:
-      return {
-        ...state,
-        cartItemsFavorite: addItemToCartFavorite(
-          state.cartItemsFavorite,
-          action.payload
-        ),
-      };
-    case CartActionTypes.REMOVE_ITEM_FROM_FAVORITE:
-      return {
-        ...state,
-        cartItemsFavorite: filterItemFromCart(
-          state.cartItemsFavorite,
-          action.payload
-        ),
       };
     case CartActionTypes.CLEAR_CART:
       return {

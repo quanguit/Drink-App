@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   SafeAreaView,
   View,
@@ -18,7 +18,7 @@ import { connect } from "react-redux";
 import Header from "../component/bar/header";
 import StripeCheckoutButton from "../component/stripe-button/stripe-button";
 
-const CheckoutScreen = ({ cartItems, total, currentUser, clearCart }) => {
+const CheckoutScreen = ({ cartItems, total, currentUser }) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -44,7 +44,7 @@ const CheckoutScreen = ({ cartItems, total, currentUser, clearCart }) => {
                 <View>
                   <View style={styles.cart}>
                     <Text style={styles.textSuccess}>Total</Text>
-                    <Text style={styles.textSuccess}>{total}đ</Text>
+                  <Text style={styles.textSuccess}>{total}đ</Text>
                   </View>
                   {currentUser ? (
                     <StripeCheckoutButton price={total} />

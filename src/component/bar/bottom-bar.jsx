@@ -25,6 +25,10 @@ const Stack = createStackNavigator();
 const BottomBar = ({ currentUser }) => {
   const YourOtherScreen = () => <OthersScreen currentUser={currentUser} />;
   const YourCheckoutScreen = () => <CheckoutScreen currentUser={currentUser} />;
+  const YourCategoryScreen = () => <CategoryScreen currentUser={currentUser} />;
+  const YourFavoriteItemScreen = () => (
+    <FavoriteItemScreen currentUser={currentUser} />
+  );
   return (
     <NavigationContainer independent={true}>
       <Tabs.Navigator
@@ -58,7 +62,7 @@ const BottomBar = ({ currentUser }) => {
         />
         <Tabs.Screen
           name="Categories"
-          component={CategoryScreen}
+          component={YourCategoryScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <MaterialIcons
@@ -84,7 +88,7 @@ const BottomBar = ({ currentUser }) => {
         />
         <Tabs.Screen
           name="Favorite"
-          component={FavoriteItemScreen}
+          component={YourFavoriteItemScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <Fontisto

@@ -10,12 +10,14 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { auth } from "../firebase/firebase";
+import Header from "../component/bar/header";
 
 const ProfileScreen = ({ currentUser }) => {
   const { displayName, email } = currentUser;
 
   return (
     <SafeAreaView style={styles.container}>
+      <Header />
       <View style={styles.userInfoSection}>
         <View style={{ flexDirection: "row", marginTop: 15 }}>
           <Avatar.Image

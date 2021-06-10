@@ -14,18 +14,3 @@ export const selectCartTotal = createSelector([selectCartItems], (cartItems) =>
     0
   )
 );
-
-export const selectCartItemsFavorite = createSelector(
-  [selectCart],
-  (cart) => cart.cartItemsFavorite
-);
-
-export const selectCartItemsCount = createSelector(
-  [selectCartItemsFavorite],
-  (cartItemsFavorite) =>
-    cartItemsFavorite.reduce(
-      (accumulatedQuantity, cartItem) =>
-        accumulatedQuantity + cartItem.quantity,
-      0
-    )
-);

@@ -15,16 +15,6 @@ export const clearItemFromCart = (item) => ({
   payload: item,
 });
 
-export const addItemToFavorite = (item) => ({
-  type: CartActionTypes.ADD_ITEM_TO_FAVORITE,
-  payload: item,
-});
-
-export const removeItemFromFavorite = (item) => ({
-  type: CartActionTypes.REMOVE_ITEM_FROM_FAVORITE,
-  payload: item,
-});
-
 export const clearCart = () => ({
   type: CartActionTypes.CLEAR_CART,
 });
