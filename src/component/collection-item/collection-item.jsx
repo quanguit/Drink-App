@@ -43,11 +43,9 @@ const CollectionItem = ({ collection, addItem, currentUser }) => {
     const addFavorite = async (item) => {
       const userRef = firestore.doc(`user/${currentUser.id}`);
       let likesList = (await userRef.get()).data().Likes;
-      let snapshot = (await userRef.get()).data();
       // check exist
       try {
-        await userRef.set({
-          ...snapshot,
+        await userRef.update({
           Likes: addItemToCartFavorite(likesList, item),
         });
       } catch (error) {

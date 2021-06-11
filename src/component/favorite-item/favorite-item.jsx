@@ -11,10 +11,8 @@ const FavoriteItem = ({ cartItem, currentUser }) => {
   const removeFavorite = async (item) => {
     const userRef = firestore.doc(`user/${currentUser.id}`);
     let likesList = (await userRef.get()).data().Likes;
-    let snapshot = (await userRef.get()).data();
     try {
-      await userRef.set({
-        ...snapshot,
+      await userRef.update({
         Likes: removeCartFavorite(likesList, item),
       });
     } catch (error) {
