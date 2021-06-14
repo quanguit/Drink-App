@@ -16,7 +16,7 @@ import Header from "../component/bar/header";
 import { firestore } from "../firebase/firebase";
 import { FadeLoader } from "react-spinners";
 
-const CategoryScreen = ({ currentUser }) => {
+const CategoryScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [category, setCategory] = useState([]);
   const [collection, setCollection] = useState([]);
@@ -95,7 +95,7 @@ const CategoryScreen = ({ currentUser }) => {
           />
           <CollectionItem
             collection={filteredCollection}
-            currentUser={currentUser}
+            navigation={navigation}
           />
         </SafeAreaView>
       </ScrollView>

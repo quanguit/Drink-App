@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -12,6 +12,8 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import Feather from "react-native-vector-icons/Feather";
 import { COLORS } from "../containts/theme";
 import { auth, signInWithGoogle } from "../firebase/firebase";
+import { useDispatch } from "react-redux";
+import { signInUser } from "../redux/user/user.actions";
 
 const SignInScreen = ({ navigation }) => {
   const [data, setData] = useState({
@@ -19,6 +21,11 @@ const SignInScreen = ({ navigation }) => {
     password: "",
   });
   const [emailHasBeenSent, setEmailHasBeenSent] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    resetForm();
+  }, []);
 
   const checkValid = async (val, type) => {
     if (type === "email") {
@@ -42,15 +49,8 @@ const SignInScreen = ({ navigation }) => {
   };
 
   const { email, password } = data;
-
   const handleSignIn = async () => {
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      resetForm();
-    } catch (error) {
-      // alert("Your email or password was wrong!");
-      alert(`${error.message}`);
-    }
+    dispatch(signInUser({ email, password }));
   };
 
   const sendResetEmail = () => {
@@ -117,23 +117,30 @@ const SignInScreen = ({ navigation }) => {
         </TouchableOpacity>
         <View style={styles.button}>
           <TouchableOpacity
-            style={styles.signIn}
+            style={[styles.signIn, { backgroundColor: COLORS.primary }]}
             onPress={() => handleSignIn()}
           >
-            <Text style={styles.buttonTitle}>Sign In</Text>
+            <Text style={[styles.buttonTitle, { color: COLORS.white }]}>
+              Sign In
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.signIn, { marginTop: 10 }]}
+            style={[
+              styles.signIn,
+              { backgroundColor: "#77acf1", borderColor: "#77acf1" },
+            ]}
             onPress={signInWithGoogle}
           >
-            <Text style={styles.buttonTitle}>Sign In With Google</Text>
+            <Text style={[styles.buttonTitle, { color: COLORS.white }]}>
+              Sign In With Google
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.signIn, { marginTop: 10 }]}
+            style={styles.signIn}
             onPress={() =>
-              navigation.push("SignUpScreen", { name: "SignUpScreen" })
+              navigation.navigate("SignUpScreen", { name: "SignUpScreen" })
             }
           >
             <Text style={styles.buttonTitle}>Sign Up</Text>
@@ -156,7 +163,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     paddingHorizontal: 20,
     paddingBottom: 50,
-    paddingTop: 20,
   },
   footer: {
     backgroundColor: "#fff",
@@ -172,7 +178,7 @@ const styles = StyleSheet.create({
   },
   text_footer: {
     color: "black",
-    fontSize: 25,
+    fontSize: 18,
   },
   action: {
     flexDirection: "row",
@@ -198,6 +204,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: COLORS.primary,
     borderWidth: 1,
+    marginTop: 10,
   },
   buttonTitle: {
     fontSize: 17,

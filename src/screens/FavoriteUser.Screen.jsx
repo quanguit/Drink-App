@@ -10,10 +10,17 @@ import {
 import FavoriteItem from "../component/favorite-item/favorite-item";
 import Header from "../component/bar/header";
 import { firestore } from "../firebase/firebase";
+import { useSelector } from "react-redux";
 
-const FavoriteUserScreen = ({ currentUser }) => {
+const mapState = ({ user }) => ({
+  currentUser: user.currentUser,
+});
+
+
+
+const FavoriteUserScreen = () => {
   const [cartLiked, setCartLiked] = useState([]);
-
+  const { currentUser } = useSelector(mapState);
   useEffect(() => {
     const getCartLiked = async () => {
       try {
@@ -36,9 +43,7 @@ const FavoriteUserScreen = ({ currentUser }) => {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 80 }}
           keyExtractor={(item, index) => `${item.product_id}`}
-          renderItem={({ item }) => (
-            <FavoriteItem cartItem={item} currentUser={currentUser} />
-          )}
+          renderItem={({ item }) => <FavoriteItem cartItem={item} />}
           ListFooterComponentStyle={{ paddingHorizontal: 25, marginTop: 20 }}
           ListFooterComponent={() => {
             if (cartLiked.length === 0) {

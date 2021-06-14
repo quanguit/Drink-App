@@ -54,7 +54,8 @@ export const addItemToCartFavorite = (likesList, item) => {
 };
 
 export const removeCartFavorite = (likesList, item) => {
-  return likesList.filter(
+  likesList = likesList.filter(
     (cartItem) => cartItem.product_id !== item.product_id
   );
+  return likesList;
 };

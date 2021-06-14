@@ -34,7 +34,7 @@ export const SIZES = {
   h4: 18,
   body1: 30,
   body2: 20,
-  body3: 16,
+  body3: 19,
   body4: 14,
   body5: 12,
 
@@ -45,7 +45,7 @@ export const SIZES = {
 
 export const FONTS = {
   largeTitle: {
-    fontFamily: "Roboto-regular",
+    fontFamily: "Roboto-Regular",
     fontSize: SIZES.largeTitle,
     lineHeight: 55,
   },

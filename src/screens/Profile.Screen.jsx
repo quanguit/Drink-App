@@ -11,8 +11,14 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { auth } from "../firebase/firebase";
 import Header from "../component/bar/header";
+import { useSelector } from "react-redux";
 
-const ProfileScreen = ({ currentUser }) => {
+const mapState = ({ user }) => ({
+  currentUser: user.currentUser,
+});
+
+const ProfileScreen = () => {
+  const { currentUser } = useSelector(mapState);
   const { displayName, email } = currentUser;
 
   return (

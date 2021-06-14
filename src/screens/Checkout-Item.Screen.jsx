@@ -14,11 +14,16 @@ import {
   selectCartTotal,
 } from "../redux/cart/cart.selectors.js";
 import { createStructuredSelector } from "reselect";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import Header from "../component/bar/header";
 import StripeCheckoutButton from "../component/stripe-button/stripe-button";
 
-const CheckoutScreen = ({ cartItems, total, currentUser }) => {
+const mapState = ({ user }) => ({
+  currentUser: user.currentUser,
+});
+
+const CheckoutScreen = ({ cartItems, total }) => {
+  const { currentUser } = useSelector(mapState);
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -44,7 +49,7 @@ const CheckoutScreen = ({ cartItems, total, currentUser }) => {
                 <View>
                   <View style={styles.cart}>
                     <Text style={styles.textSuccess}>Total</Text>
-                  <Text style={styles.textSuccess}>{total}đ</Text>
+                    <Text style={styles.textSuccess}>{total}đ</Text>
                   </View>
                   {currentUser ? (
                     <StripeCheckoutButton price={total} />

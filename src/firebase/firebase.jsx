@@ -21,14 +21,11 @@ export const generateUserDocument = async (user, additionalData) => {
   if (!snapshot.exists) {
     const { email, displayName } = user;
     const createAt = new Date();
-    const Likes = [];
-
     try {
       await userRef.set({
         displayName,
         email,
         createAt,
-        Likes,
         ...additionalData,
       });
     } catch (error) {

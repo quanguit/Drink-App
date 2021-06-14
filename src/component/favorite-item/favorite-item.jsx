@@ -4,9 +4,15 @@ import { COLORS } from "../../containts/theme";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { firestore } from "../../firebase/firebase";
 import { removeCartFavorite } from "../../redux/cart/cart.utils";
+import { useSelector } from "react-redux";
 
-const FavoriteItem = ({ cartItem, currentUser }) => {
+const mapState = ({ user }) => ({
+  currentUser: user.currentUser,
+});
+
+const FavoriteItem = ({ cartItem }) => {
   const { name, imageUrl } = cartItem;
+  const { currentUser } = useSelector(mapState);
 
   const removeFavorite = async (item) => {
     const userRef = firestore.doc(`user/${currentUser.id}`);

@@ -9,15 +9,10 @@ import {
   SafeAreaView,
 } from "react-native";
 import { COLORS, FONTS, SIZES } from "../../containts/theme";
-import AntDesign from "react-native-vector-icons/AntDesign";
-import { connect } from "react-redux";
-import { addItem } from "../../redux/cart/cart.actions.js";
-import { firestore } from "../../firebase/firebase";
-import { addItemToCartFavorite } from "../../redux/cart/cart.utils.js";
 
 const numColumns = 2;
 
-const CollectionItem = ({ collection, addItem, currentUser }) => {
+const CollectionItem = ({ collection, navigation }) => {
   const formatData = (datalist, numColumns) => {
     const totalRows = Math.floor(datalist.length / numColumns);
     let totalLastRow = datalist.length - totalRows * numColumns;
@@ -28,62 +23,32 @@ const CollectionItem = ({ collection, addItem, currentUser }) => {
         title: "blank",
         imageUrl: "blank",
         empty: true,
-        ai,
       });
       totalLastRow++;
     }
     return datalist;
   };
 
-  const Collection = ({ item }) => {
+  const Collection = ({ item, navigation }) => {
     if (item.empty) {
       return <View style={[styles.container, styles.vi]} />;
     }
 
-    const addFavorite = async (item) => {
-      const userRef = firestore.doc(`user/${currentUser.id}`);
-      let likesList = (await userRef.get()).data().Likes;
-      // check exist
-      try {
-        await userRef.update({
-          Likes: addItemToCartFavorite(likesList, item),
-        });
-      } catch (error) {
-        console.log("Error add item", error);
-      }
-    };
-
     return (
       <SafeAreaView style={styles.container}>
-        <Image source={item.imageUrl} resizeMode="cover" style={styles.image} />
-        <View style={styles.view}>
-          <Text style={styles.text}>{item.name}</Text>
-          <Text style={styles.text1}>{item.price}đ</Text>
-        </View>
-        <View style={styles.view}>
-          <TouchableOpacity>
-            <AntDesign
-              name="pluscircleo"
-              size={20}
-              color="#09e609"
-              style={{ marginLeft: 5 }}
-              onPress={() => addItem(item)}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <AntDesign
-              name="hearto"
-              size={20}
-              color="#ff4d4d"
-              style={{ marginRight: 10 }}
-              onPress={() => {
-                currentUser
-                  ? addFavorite(item)
-                  : alert("You haven't logged into your account yet !");
-              }}
-            />
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("DetailsScreen", { item })}
+        >
+          <Image
+            source={item.imageUrl}
+            resizeMode="cover"
+            style={styles.image}
+          />
+          <View style={styles.view}>
+            <Text style={styles.text}>{item.name}</Text>
+            <Text style={styles.text1}>{item.price}đ</Text>
+          </View>
+        </TouchableOpacity>
       </SafeAreaView>
     );
   };
@@ -92,19 +57,16 @@ const CollectionItem = ({ collection, addItem, currentUser }) => {
     <FlatList
       data={formatData(collection, numColumns)}
       keyExtractor={(item, index) => `${item.product_id}`}
-      renderItem={({ item }) => <Collection item={item} />}
+      renderItem={({ item }) => (
+        <Collection item={item} navigation={navigation} />
+      )}
       numColumns={numColumns}
       vertical
       showsVerticalScrollIndicator={false}
     />
   );
 };
-
-const mapDispatchToProps = (dispatch) => ({
-  addItem: (item) => dispatch(addItem(item)),
-});
-
-export default connect(null, mapDispatchToProps)(CollectionItem);
+export default CollectionItem;
 
 const styles = StyleSheet.create({
   container: {
@@ -113,9 +75,7 @@ const styles = StyleSheet.create({
     marginBottom: SIZES.radius,
   },
   view: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: "column",
   },
   image: {
     width: 170,
@@ -123,14 +83,15 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   text: {
-    marginLeft: 5,
+    paddingLeft: 5,
     ...FONTS.body3,
     color: COLORS.darkgray,
   },
   text1: {
-    marginRight: 10,
+    paddingLeft: 5,
     ...FONTS.body3,
-    color: COLORS.darkgray,
+    fontFamily: "Roboto-Regular",
+    color: COLORS.black,
   },
   vi: {
     backgroundColor: "transparent",

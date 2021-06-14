@@ -10,6 +10,7 @@ import CategoryScreen from "../../screens/Categories.Screen";
 import CheckoutScreen from "../../screens/Checkout-Item.Screen";
 import FavoriteItemScreen from "../../screens/Favorite-Item.Screen";
 import OthersScreen from "../../screens/Others.Screen";
+import DetailsScreen from "../../screens/Details.Screen.jsx";
 
 import Entypo from "react-native-vector-icons/Entypo";
 import Fontisto from "react-native-vector-icons/Fontisto";
@@ -22,13 +23,15 @@ import { COLORS } from "../../containts/theme";
 const Tabs = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const BottomBar = ({ currentUser }) => {
-  const YourOtherScreen = () => <OthersScreen currentUser={currentUser} />;
-  const YourCheckoutScreen = () => <CheckoutScreen currentUser={currentUser} />;
-  const YourCategoryScreen = () => <CategoryScreen currentUser={currentUser} />;
-  const YourFavoriteItemScreen = () => (
-    <FavoriteItemScreen currentUser={currentUser} />
-  );
+// navigate dụa vào NAME
+const toggleCategoryAndDetails = () => (
+  <Stack.Navigator headerMode="none">
+    <Stack.Screen name="Categories" component={CategoryScreen} />
+    <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
+  </Stack.Navigator>
+);
+
+const BottomBar = () => {
   return (
     <NavigationContainer independent={true}>
       <Tabs.Navigator
@@ -62,7 +65,7 @@ const BottomBar = ({ currentUser }) => {
         />
         <Tabs.Screen
           name="Categories"
-          component={YourCategoryScreen}
+          component={toggleCategoryAndDetails}
           options={{
             tabBarIcon: ({ focused }) => (
               <MaterialIcons
@@ -75,7 +78,7 @@ const BottomBar = ({ currentUser }) => {
         />
         <Tabs.Screen
           name="Checkout"
-          component={YourCheckoutScreen}
+          component={CheckoutScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <Feather
@@ -88,7 +91,7 @@ const BottomBar = ({ currentUser }) => {
         />
         <Tabs.Screen
           name="Favorite"
-          component={YourFavoriteItemScreen}
+          component={FavoriteItemScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <Fontisto
@@ -101,7 +104,7 @@ const BottomBar = ({ currentUser }) => {
         />
         <Tabs.Screen
           name="Others"
-          component={YourOtherScreen}
+          component={OthersScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <FontAwesome

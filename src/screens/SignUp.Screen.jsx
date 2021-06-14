@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -12,7 +12,8 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import { COLORS } from "../containts/theme.js";
-import { auth, generateUserDocument } from "../firebase/firebase";
+import { useDispatch } from "react-redux";
+import { signUpUser } from "../redux/user/user.actions.js";
 
 const SignUpScreen = ({ navigation }) => {
   const [data, setData] = useState({
@@ -21,6 +22,12 @@ const SignUpScreen = ({ navigation }) => {
     password: "",
     confirmPassword: "",
   });
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    resetForm();
+    // redirect to other page in web
+  }, []);
 
   const checkValid = async (val, type) => {
     if (type === "username") {
@@ -57,21 +64,7 @@ const SignUpScreen = ({ navigation }) => {
 
   const { displayName, email, password, confirmPassword } = data;
   const handleSignUp = async () => {
-    if (password !== confirmPassword) {
-      alert("Password don't match");
-      return;
-    }
-
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-      generateUserDocument(user, { displayName });
-      resetForm();
-    } catch (error) {
-      alert("Error Signing up with email and password");
-    }
+    dispatch(signUpUser({ displayName, email, password, confirmPassword }));
   };
 
   return (
@@ -178,17 +171,21 @@ const SignUpScreen = ({ navigation }) => {
 
         <View style={styles.button}>
           <TouchableOpacity
-            style={[styles.signUp, { marginTop: 10 }]}
+            style={[styles.signUp, { backgroundColor: COLORS.primary }]}
             onPress={() => handleSignUp()}
           >
-            <Text style={styles.buttonTitle}>Sign Up</Text>
+            <Text style={[styles.buttonTitle, { color: COLORS.white }]}>
+              Sign Up
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.signUp, { marginTop: 10 }]}
-            onPress={() => navigation.push("SignUpScreen")}
+            style={styles.signUp}
+            onPress={() => navigation.navigate("SignInScreen")}
           >
-            <Text style={styles.buttonTitle}>Sign In</Text>
+            <Text style={[styles.buttonTitle, { color: COLORS.primary }]}>
+              Sign In
+            </Text>
           </TouchableOpacity>
         </View>
       </Animatable.View>
@@ -223,7 +220,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   text_footer: {
-    color: "black",
+    color: COLORS.black,
     fontSize: 25,
   },
   action: {
@@ -236,11 +233,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     height: 30,
-    color: "black",
+    color: COLORS.black,
   },
   button: {
     alignItems: "center",
-    marginTop: 30,
+    marginTop: 20,
   },
   signUp: {
     width: "100%",
@@ -250,18 +247,18 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: COLORS.primary,
     borderWidth: 1,
+    marginTop: 10,
   },
   buttonTitle: {
     fontSize: 17,
     fontWeight: "bold",
-    color: COLORS.primary,
   },
   textPrivate: {
     flexDirection: "row",
     flexWrap: "wrap",
     marginTop: 20,
     fontSize: 20,
-    color: "black",
+    color: COLORS.black,
   },
   color_textPrivate: {
     color: "grey",

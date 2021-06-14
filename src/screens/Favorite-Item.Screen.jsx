@@ -2,15 +2,17 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import FavoriteUserScreen from "./FavoriteUser.Screen";
 import FavoriteNoUserScreen from "./FavoriateNoUser.Screen";
+import { useSelector } from "react-redux";
 
-const FavoriteItemScreen = ({ currentUser }) => {
+const mapState = ({ user }) => ({
+  currentUser: user.currentUser,
+});
+
+const FavoriteItemScreen = () => {
+  const { currentUser } = useSelector(mapState);
   return (
     <NavigationContainer independent={true}>
-      {currentUser ? (
-        <FavoriteUserScreen currentUser={currentUser} />
-      ) : (
-        <FavoriteNoUserScreen />
-      )}
+      {currentUser ? <FavoriteUserScreen /> : <FavoriteNoUserScreen />}
     </NavigationContainer>
   );
 };
