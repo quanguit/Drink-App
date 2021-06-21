@@ -7,7 +7,6 @@ import {
 
 const INITIAL_STATE = {
   cartItems: [],
-  cartItemsFavorite: [],
 };
 
 const cartReducer = (state = INITIAL_STATE, action) => {

@@ -16,8 +16,6 @@ const mapState = ({ user }) => ({
   currentUser: user.currentUser,
 });
 
-
-
 const FavoriteUserScreen = () => {
   const [cartLiked, setCartLiked] = useState([]);
   const { currentUser } = useSelector(mapState);

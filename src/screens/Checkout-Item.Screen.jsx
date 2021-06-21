@@ -32,7 +32,7 @@ const CheckoutScreen = ({ cartItems, total }) => {
           data={cartItems}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 80 }}
-          keyExtractor={(item, index) => `${item.product_id}`}
+          keyExtractor={(item, index) => String(index)}
           renderItem={({ item }) => <CheckoutItem cartItem={item} />}
           ListFooterComponentStyle={{ paddingHorizontal: 25, marginTop: 20 }}
           ListFooterComponent={() => {

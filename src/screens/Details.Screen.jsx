@@ -22,6 +22,7 @@ const mapState = ({ user }) => ({
 
 const DetailsScreen = ({ route, navigation, addItem }) => {
   const { item } = route.params;
+  const [selectedSize, setSelectedSize] = useState("");
   const { currentUser } = useSelector(mapState);
 
   const [collection, setCollection] = useState([]);
@@ -70,6 +71,25 @@ const DetailsScreen = ({ route, navigation, addItem }) => {
       </View>
     );
   };
+
+  const renderShoeSizes = () => {
+    return item.sizes.map((ite, index) => (
+      <TouchableOpacity
+        key={index}
+        style={[
+          styles.btnSize,
+          {
+            backgroundColor:
+              item.sizes[index] === selectedSize ? COLORS.lightGray3 : null,
+          },
+        ]}
+        onPress={() => setSelectedSize(ite)}
+      >
+        <Text>{ite}</Text>
+      </TouchableOpacity>
+    ));
+  };
+
   return (
     <View style={styles.container}>
       <Header />
@@ -102,37 +122,41 @@ const DetailsScreen = ({ route, navigation, addItem }) => {
             <Text style={styles.Text}>YÊU THÍCH</Text>
           </View>
         </View>
+
         <View style={styles.contentSize}>
           <Text style={styles.textSize}>Size:</Text>
-          <TouchableOpacity style={styles.btnSize}>
-            <Text>S</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnSize}>
-            <Text>M</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnSize}>
-            <Text>L</Text>
-          </TouchableOpacity>
-          <Text style={styles.textNote}>
-            (Note: default size M, size S: -5000đ, size L: +5000đ)
-          </Text>
+          {renderShoeSizes()}
+
+          <View style={styles.viewTextNote}>
+            <Text style={styles.textNote}>
+              (Note: default size M, size S: -5000đ, size L: +5000đ)
+            </Text>
+          </View>
         </View>
+
         <View style={styles.relateWrapper}>
           <Text style={styles.relateTitle}>Relate Drink or Food</Text>
           <View style={styles.relateListWrapper}>
             <FlatList
               horizontal={true}
               showsHorizontalScrollIndicator={false}
-              keyExtractor={(relate) => `${relate.product_id}`}
+              keyExtractor={(relate, index) => `${relate.product_id}`}
               data={relate}
               renderItem={(rel) => <SubCollection rel={rel} />}
             />
           </View>
         </View>
+
         <View style={styles.addToCarContainer}>
           <TouchableOpacity
             style={styles.shareButton}
-            onPress={() => addItem(item)}
+            onPress={() => {
+              if (selectedSize) {
+                addItem({ ...item, size: selectedSize });
+              } else {
+                alert("You must choose size!  ");
+              }
+            }}
           >
             <Text style={styles.shareButtonText}>Add To Cart</Text>
           </TouchableOpacity>
@@ -151,7 +175,6 @@ export default connect(null, mapDispatchToProps)(DetailsScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
   },
   sign: {
     position: "absolute",
@@ -276,10 +299,12 @@ const styles = StyleSheet.create({
   },
   textNote: {
     fontSize: 16,
-    marginLeft: 10,
-    paddingTop: 45,
     fontFamily: "Roboto-Bold",
     fontWeight: "bold",
+  },
+  viewTextNote: {
     position: "absolute",
+    marginTop: 40,
+    marginLeft: 10,
   },
 });

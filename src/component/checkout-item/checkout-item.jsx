@@ -10,7 +10,7 @@ import {
 import { connect } from "react-redux";
 
 const CheckoutItem = ({ cartItem, addItem, removeItem, clearItem }) => {
-  const { name, price, imageUrl, quantity } = cartItem;
+  const { name, price, imageUrl, quantity, size } = cartItem;
 
   return (
     <View style={styles.cartCard}>
@@ -18,6 +18,7 @@ const CheckoutItem = ({ cartItem, addItem, removeItem, clearItem }) => {
       <View style={styles.container}>
         <Text style={styles.name}>{name}</Text>
         <Text style={styles.price}>{price}đ</Text>
+        <Text style={styles.size}>Size: {size}</Text>
       </View>
       <View style={{ marginRight: "auto", alignItems: "center" }}>
         <Text style={styles.number}>{quantity}</Text>
@@ -78,12 +79,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 5,
   },
-  price: {
-    fontWeight: "bold",
-    fontSize: 15,
-    paddingTop: 10,
-    color: COLORS.lightGray,
-  },
   number: {
     fontWeight: "bold",
     fontSize: 18,
@@ -92,10 +87,20 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
+  price: {
+    fontWeight: "bold",
+    fontSize: 15,
+    paddingTop: 5,
+  },
+  size: {
+    fontWeight: "bold",
+    fontSize: 15,
+    paddingTop: 5,
+  },
   container: {
     height: 100,
     marginLeft: 10,
-    paddingVertical: 20,
+    paddingVertical: 10,
     flex: 1,
   },
   divider: {
