@@ -19,18 +19,22 @@ const mapState = ({ user }) => ({
 const FavoriteUserScreen = () => {
   const [cartLiked, setCartLiked] = useState([]);
   const { currentUser } = useSelector(mapState);
+
   useEffect(() => {
-    const getCartLiked = async () => {
-      try {
-        const userRef = firestore.doc(`user/${currentUser.id}`);
-        let likeList = (await userRef.get()).data().Likes;
-        setCartLiked(likeList);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     getCartLiked();
   }, [cartLiked]);
+
+  const getCartLiked = async () => {
+    try {
+      const userRef = firestore.doc(`user/${currentUser.id}`);
+      // const likeList = (await userRef.get()).data();
+      // console.log(likeList);
+      const likeList = (await userRef.get()).data().Likes;
+      setCartLiked(likeList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>

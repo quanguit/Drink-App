@@ -27,7 +27,7 @@ const SignInScreen = ({ navigation }) => {
     resetForm();
   }, []);
 
-  const checkValid = async (val, type) => {
+  const checkValid = (val, type) => {
     if (type === "email") {
       setData({
         ...data,

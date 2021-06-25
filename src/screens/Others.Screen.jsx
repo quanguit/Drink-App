@@ -1,6 +1,6 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import ProfileScreen from "./Profile.Screen";
+import ProfileAndEditScreen from "./ProfileAndEdit.Screen";
 import SignInAndSignUpScreen from "./SignInAndSignUp.Screen";
 import { useSelector } from "react-redux";
 
@@ -12,7 +12,7 @@ const OthersScreen = () => {
   const { currentUser } = useSelector(mapState);
   return (
     <NavigationContainer independent={true}>
-      {currentUser ? <ProfileScreen /> : <SignInAndSignUpScreen />}
+      {currentUser ? <ProfileAndEditScreen /> : <SignInAndSignUpScreen />}
     </NavigationContainer>
   );
 };

@@ -34,7 +34,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
         signUpSuccess: action.payload,
       };
     }
-
     case userTypes.SIGN_UP_FAILURE: {
       return {
         ...state,

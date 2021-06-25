@@ -1,7 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import FavoriteUserScreen from "./FavoriteUser.Screen";
-import FavoriteNoUserScreen from "./FavoriateNoUser.Screen";
+import FavoriteNoUserScreen from "./FavoriteNoUser.Screen";
 import { useSelector } from "react-redux";
 
 const mapState = ({ user }) => ({

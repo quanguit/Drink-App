@@ -24,8 +24,9 @@ const DetailsScreen = ({ route, navigation, addItem }) => {
   const { item } = route.params;
   const [selectedSize, setSelectedSize] = useState("");
   const { currentUser } = useSelector(mapState);
-
   const [collection, setCollection] = useState([]);
+  const [color, setColor] = useState(false);
+
   useEffect(() => {
     const getCollection = async () => {
       const fetchCollection = await firestore.collection("collection").get();
@@ -72,7 +73,7 @@ const DetailsScreen = ({ route, navigation, addItem }) => {
     );
   };
 
-  const renderShoeSizes = () => {
+  const renderSizes = () => {
     return item.sizes.map((ite, index) => (
       <TouchableOpacity
         key={index}
@@ -104,17 +105,17 @@ const DetailsScreen = ({ route, navigation, addItem }) => {
         <View style={styles.headerWrapper}>
           <View>
             <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.price}>{item.price}đ</Text>
+            <Text style={styles.price}>{item.price}</Text>
           </View>
           <View style={styles.headerRight}>
             <TouchableOpacity>
               <AntDesign
-                name="hearto"
+                name={color ? "heart" : "hearto"}
                 size={20}
                 color="#ff4d4d"
                 onPress={() => {
                   currentUser
-                    ? addFavorite(item)
+                    ? (setColor(!color), addFavorite(item))
                     : alert("You haven't logged into your account yet !");
                 }}
               />
@@ -125,11 +126,11 @@ const DetailsScreen = ({ route, navigation, addItem }) => {
 
         <View style={styles.contentSize}>
           <Text style={styles.textSize}>Size:</Text>
-          {renderShoeSizes()}
+          {renderSizes()}
 
           <View style={styles.viewTextNote}>
             <Text style={styles.textNote}>
-              (Note: default size M, size S: -5000đ, size L: +5000đ)
+              (Note: default size M, size S: -5000, size L: +5000)
             </Text>
           </View>
         </View>
@@ -226,7 +227,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 30,
+    borderRadius: 10,
     backgroundColor: COLORS.primary,
   },
   shareButtonText: {
@@ -234,7 +235,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: COLORS.white,
     marginRight: 10,
-    fontWeight: 700,
   },
   addToCarContainer: {
     marginHorizontal: 30,

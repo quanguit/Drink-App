@@ -9,17 +9,19 @@ import {
 } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import AntDesign from "react-native-vector-icons/AntDesign";
 import { auth } from "../firebase/firebase";
 import Header from "../component/bar/header";
 import { useSelector } from "react-redux";
+import { COLORS } from "../containts/theme";
 
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
 });
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
   const { currentUser } = useSelector(mapState);
-  const { displayName, email } = currentUser;
+  const { displayName, email, phone, address } = currentUser;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -48,16 +50,12 @@ const ProfileScreen = () => {
       </View>
 
       <View style={styles.menuWrapper}>
-        <TouchableRipple onPress={() => {}}>
+        <TouchableRipple
+          onPress={() => navigation.navigate("EditProfileScreen")}
+        >
           <View style={styles.menuItem}>
-            <Icon name="map-marker-radius" color="#FF6347" size={25} />
-            <Text style={styles.menuItemText}>Việt Nam</Text>
-          </View>
-        </TouchableRipple>
-        <TouchableRipple onPress={() => {}}>
-          <View style={styles.menuItem}>
-            <Icon name="phone" color="#FF6347" size={25} />
-            <Text style={styles.menuItemText}>+91-900000009</Text>
+            <AntDesign name="edit" color="#FF6347" size={25} />
+            <Text style={styles.menuItemText}>Edit Profile</Text>
           </View>
         </TouchableRipple>
         <TouchableRipple>
@@ -66,10 +64,16 @@ const ProfileScreen = () => {
             <Text style={styles.menuItemText}>{email}</Text>
           </View>
         </TouchableRipple>
-        <TouchableRipple onPress={() => {}}>
+        <TouchableRipple>
           <View style={styles.menuItem}>
-            <Icon name="account-check-outline" color="#FF6347" size={25} />
-            <Text style={styles.menuItemText}>Support</Text>
+            <Icon name="phone" color="#FF6347" size={25} />
+            <Text style={styles.menuItemText}>{phone}</Text>
+          </View>
+        </TouchableRipple>
+        <TouchableRipple>
+          <View style={styles.menuItem}>
+            <Icon name="map-marker-radius" color="#FF6347" size={25} />
+            <Text style={styles.menuItemText}>{address}</Text>
           </View>
         </TouchableRipple>
         <TouchableRipple>
@@ -135,5 +139,30 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "bold",
     color: "white",
+  },
+  icon: {
+    flex: 1,
+    textAlign: "center",
+    marginTop: 20,
+  },
+  text: {
+    fontSize: 30,
+    color: "green",
+    marginTop: 20,
+  },
+  shareButton: {
+    marginTop: 25,
+    height: 50,
+    marginHorizontal: 40,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    backgroundColor: "green",
+  },
+  shareButtonText: {
+    fontFamily: "Roboto-Bold",
+    fontSize: 20,
+    color: COLORS.white,
   },
 });

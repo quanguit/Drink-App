@@ -17,7 +17,7 @@ const CheckoutItem = ({ cartItem, addItem, removeItem, clearItem }) => {
       <Image source={imageUrl} style={{ height: 80, width: 80 }} />
       <View style={styles.container}>
         <Text style={styles.name}>{name}</Text>
-        <Text style={styles.price}>{price}đ</Text>
+        <Text style={styles.price}>{price} vnd</Text>
         <Text style={styles.size}>Size: {size}</Text>
       </View>
       <View style={{ marginRight: "auto", alignItems: "center" }}>
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     elevation: 15,
     borderRadius: 10,
     backgroundColor: COLORS.lightGray3,
-    marginVertical: 10,
+    marginTop: 10,
     marginHorizontal: 20,
     paddingHorizontal: 10,
     flexDirection: "row",
@@ -82,20 +82,24 @@ const styles = StyleSheet.create({
   number: {
     fontWeight: "bold",
     fontSize: 18,
+    fontFamily: "Roboto-Bold",
   },
   name: {
     fontWeight: "bold",
     fontSize: 16,
+    fontFamily: "Roboto-Bold",
   },
   price: {
     fontWeight: "bold",
     fontSize: 15,
     paddingTop: 5,
+    fontFamily: "Roboto-Bold",
   },
   size: {
     fontWeight: "bold",
     fontSize: 15,
     paddingTop: 5,
+    fontFamily: "Roboto-Bold",
   },
   container: {
     height: 100,
