@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderTopColor: COLORS.darkray,
     flex: 1,
+    paddingBottom: 80,
   },
   paymentMethod: {
     flexDirection: "row",

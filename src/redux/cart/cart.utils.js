@@ -75,7 +75,7 @@ export const addItemToCartFavorite = (likesList, item) => {
       (cartItem) => cartItem.product_id !== item.product_id
     );
   } else {
-    likesList.push(item);
+    likesList.push({ ...item, colorful: true });
   }
   return likesList;
 };

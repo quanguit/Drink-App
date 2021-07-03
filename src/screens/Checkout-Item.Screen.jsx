@@ -89,7 +89,7 @@ const CheckoutScreen = ({ cartItems, total }) => {
   return (
     <View style={styles.container}>
       <Header />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <FlatList
           data={cartItems}
           showsVerticalScrollIndicator={false}
@@ -126,7 +126,7 @@ const CheckoutScreen = ({ cartItems, total }) => {
                   user.phone !== "" &&
                   user.address !== ""
                 ) {
-                  sheetRef.current.snapTo(0);
+                  // sheetRef.current.snapTo(0);
                   setFlag(!flag);
                   resetForm();
                 } else {
@@ -241,11 +241,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     borderRadius: 10,
     backgroundColor: COLORS.primary,
-  },
-  loading: {
-    justifyContent: "center",
-    marginTop: 300,
-    marginLeft: 160,
   },
   viewPayment: {
     paddingHorizontal: 25,

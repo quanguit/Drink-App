@@ -27,9 +27,7 @@ const FavoriteUserScreen = () => {
   const getCartLiked = async () => {
     try {
       const userRef = firestore.doc(`user/${currentUser.id}`);
-      // const likeList = (await userRef.get()).data();
-      // console.log(likeList);
-      const likeList = (await userRef.get()).data().Likes;
+      let likeList = (await userRef.get()).data().Likes;
       setCartLiked(likeList);
     } catch (error) {
       console.log(error);

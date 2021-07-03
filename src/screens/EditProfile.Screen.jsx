@@ -43,8 +43,8 @@ const EditProfileScreen = ({ navigation }) => {
         phone: userData.phone,
         address: userData.address,
       });
-      let snapshot = (await userRef.get()).data();
-      dispatch(setCurrentUser(snapshot));
+      const snapshot = (await userRef.get()).data();
+      dispatch(setCurrentUser({ ...snapshot, id: userRef.id }));
     } catch (error) {
       console.log(error);
       alert("Error when Updating!");
@@ -64,6 +64,7 @@ const EditProfileScreen = ({ navigation }) => {
               height: 100,
               width: 100,
               backgroundColor: "#E1E5EA",
+              marginTop: 10,
             }}
             imageStyle={{ borderRadius: 15 }}
           ></ImageBackground>

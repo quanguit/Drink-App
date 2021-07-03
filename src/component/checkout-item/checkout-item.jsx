@@ -17,7 +17,7 @@ const CheckoutItem = ({ cartItem, addItem, removeItem, clearItem }) => {
       <Image source={imageUrl} style={{ height: 80, width: 80 }} />
       <View style={styles.container}>
         <Text style={styles.name}>{name}</Text>
-        <Text style={styles.price}>{price} vnd</Text>
+        <Text style={styles.price}>{price}</Text>
         <Text style={styles.size}>Size: {size}</Text>
       </View>
       <View style={{ marginRight: "auto", alignItems: "center" }}>

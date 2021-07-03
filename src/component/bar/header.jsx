@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { COLORS, FONTS } from "../../containts/theme";
-import { Feather } from "@expo/vector-icons";
 
 const Header = () => {
   return (
@@ -9,7 +8,6 @@ const Header = () => {
       <View>
         <Text style={styles.headerName}>Giangnam Coffee</Text>
       </View>
-      <Feather name="bell" size={22} color="#fff" style={styles.headerName1} />
     </View>
   );
 };

@@ -112,7 +112,13 @@ const SignInScreen = ({ navigation }) => {
           </View>
         </View>
 
-        <TouchableOpacity onPress={() => sendResetEmail()}>
+        <TouchableOpacity
+          onPress={() => {
+            data.email !== ""
+              ? sendResetEmail()
+              : alert("You haven't filled your email!");
+          }}
+        >
           <Text style={styles.textPrivate}>Forgot password?</Text>
         </TouchableOpacity>
         <View style={styles.button}>

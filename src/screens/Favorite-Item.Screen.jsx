@@ -10,6 +10,7 @@ const mapState = ({ user }) => ({
 
 const FavoriteItemScreen = () => {
   const { currentUser } = useSelector(mapState);
+
   return (
     <NavigationContainer independent={true}>
       {currentUser ? <FavoriteUserScreen /> : <FavoriteNoUserScreen />}

@@ -26,6 +26,7 @@ const DetailsScreen = ({ route, navigation, addItem }) => {
   const { currentUser } = useSelector(mapState);
   const [collection, setCollection] = useState([]);
   const [color, setColor] = useState(false);
+  const [cartLiked, setCartLiked] = useState([]);
 
   useEffect(() => {
     const getCollection = async () => {
@@ -34,7 +35,31 @@ const DetailsScreen = ({ route, navigation, addItem }) => {
       setCollection(col);
     };
     getCollection();
+    getCartLiked();
   }, []);
+
+  useEffect(() => {
+    setColorful();
+  }, [cartLiked]);
+
+  const getCartLiked = async () => {
+    try {
+      const userRef = firestore.doc(`user/${currentUser.id}`);
+      let likeList = (await userRef.get()).data().Likes;
+      setCartLiked(likeList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const setColorful = () => {
+    cartLiked.map((cart) => {
+      if (cart.product_id === item.product_id) {
+        console.log("vo");
+        setColor(cart.colorful);
+      }
+    });
+  };
 
   let temp = collection.filter(
     (collect) =>
