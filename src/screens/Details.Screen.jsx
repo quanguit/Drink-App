@@ -55,7 +55,6 @@ const DetailsScreen = ({ route, navigation, addItem }) => {
   const setColorful = () => {
     cartLiked.map((cart) => {
       if (cart.product_id === item.product_id) {
-        console.log("vo");
         setColor(cart.colorful);
       }
     });

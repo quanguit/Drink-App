@@ -35,9 +35,9 @@ const FavoriteUserScreen = () => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <Header />
+    <SafeAreaView style={{ flex: 1 }}>
+      <Header />
+      <ScrollView showsVerticalScrollIndicator={false}>
         <FlatList
           data={cartLiked}
           showsVerticalScrollIndicator={false}
@@ -59,8 +59,8 @@ const FavoriteUserScreen = () => {
             }
           }}
         />
-      </SafeAreaView>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

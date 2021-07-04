@@ -81,24 +81,25 @@ const CategoryScreen = ({ navigation }) => {
 
   if (isLoading) {
     return (
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <SafeAreaView style={styles.container}>
-          <Header />
-          <SearchBar handleChange={searchFilter} />
+      <SafeAreaView style={{ flex: 1 }}>
+        <Header />
+        <SearchBar handleChange={searchFilter} />
+        <ScrollView showsVerticalScrollIndicator={false}>
           <FlatList
             data={category}
             keyExtractor={(item, index) => `${item.id}`}
             renderItem={renderItem}
             horizontal
             showsHorizontalScrollIndicator={false}
-            style={{ paddingTop: SIZES.padding * 2 }}
+            style={{ flex: 1, marginBottom: 15 }}
           />
+
           <CollectionItem
             collection={filteredCollection}
             navigation={navigation}
           />
-        </SafeAreaView>
-      </ScrollView>
+        </ScrollView>
+      </SafeAreaView>
     );
   } else {
     return (
