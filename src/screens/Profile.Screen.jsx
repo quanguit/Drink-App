@@ -8,7 +8,7 @@ import {
   TouchableRipple,
 } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import Entypo from "react-native-vector-icons/Entypo";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { auth } from "../firebase/firebase";
 import Header from "../component/bar/header";
@@ -76,10 +76,12 @@ const ProfileScreen = ({ navigation }) => {
             <Text style={styles.menuItemText}>{address}</Text>
           </View>
         </TouchableRipple>
-        <TouchableRipple>
+        <TouchableRipple
+          onPress={() => navigation.navigate("OrderedPaymentScreen")}
+        >
           <View style={styles.menuItem}>
-            <Ionicons name="settings-outline" color="#FF6347" size={25} />
-            <Text style={styles.menuItemText}>Settings</Text>
+            <Entypo name="list" color="#FF6347" size={25} />
+            <Text style={styles.menuItemText}>Ordered Payment</Text>
           </View>
         </TouchableRipple>
       </View>

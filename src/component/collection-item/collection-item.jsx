@@ -46,7 +46,7 @@ const CollectionItem = ({ collection, navigation }) => {
           />
           <View style={styles.view}>
             <Text style={styles.text}>{item.name}</Text>
-            <Text style={styles.text1}>{item.price}</Text>
+            <Text style={styles.text1}>{item.price / 1000}.000</Text>
           </View>
         </TouchableOpacity>
       </SafeAreaView>

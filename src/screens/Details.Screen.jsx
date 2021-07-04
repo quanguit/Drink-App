@@ -129,7 +129,7 @@ const DetailsScreen = ({ route, navigation, addItem }) => {
         <View style={styles.headerWrapper}>
           <View>
             <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.price}>{item.price}</Text>
+            <Text style={styles.price}>{item.price / 1000}.000</Text>
           </View>
           <View style={styles.headerRight}>
             <TouchableOpacity>
@@ -154,7 +154,7 @@ const DetailsScreen = ({ route, navigation, addItem }) => {
 
           <View style={styles.viewTextNote}>
             <Text style={styles.textNote}>
-              (Note: default size M, size S: -5000, size L: +5000)
+              (Note: default size M, size S: -5.000, size L: +5.000)
             </Text>
           </View>
         </View>

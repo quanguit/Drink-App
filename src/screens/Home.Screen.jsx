@@ -8,7 +8,6 @@ import {
   ScrollView,
   TouchableOpacity,
   FlatList,
-  TextInput,
 } from "react-native";
 
 import { Feather } from "@expo/vector-icons";
@@ -59,19 +58,6 @@ const HomeScreen = () => {
           <View style={styles.searchContainer}>
             <Text style={styles.userGreet}>Hi You !</Text>
             <Text style={styles.userText}>What would you like to drink ?</Text>
-          </View>
-          <View>
-            <TextInput
-              style={styles.searchBox}
-              placeholder="Search Drink"
-              placeholderTextColor="#666"
-            ></TextInput>
-            <Feather
-              name="search"
-              size={22}
-              color="#666"
-              style={{ position: "absolute", top: 26, right: 60 }}
-            />
           </View>
         </ImageBackground>
       </View>

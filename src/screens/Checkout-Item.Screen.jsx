@@ -20,6 +20,8 @@ import Payment from "../component/payment/payment";
 import BottomSheet from "reanimated-bottom-sheet";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { clearCart } from "../redux/cart/cart.actions";
+import { firestore } from "../firebase/firebase";
+import { v4 as uuid } from "uuid";
 
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
@@ -86,6 +88,28 @@ const CheckoutScreen = ({ cartItems, total }) => {
     });
   };
 
+  const addOrders = async () => {
+    const userRef = firestore.doc(`user/${currentUser.id}`);
+    let ordersList = (await userRef.get()).data().Orders;
+    ordersList.push({
+      order_ID: uuid(),
+      name: user.name,
+      phone: user.phone,
+      address: user.address,
+      totalCost: total,
+      items: cartItems,
+      status: 0,
+      createdAt: new Date(),
+    });
+    try {
+      await userRef.update({
+        Orders: ordersList,
+      });
+    } catch (error) {
+      console.log("Error add item", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Header />
@@ -126,8 +150,8 @@ const CheckoutScreen = ({ cartItems, total }) => {
                   user.phone !== "" &&
                   user.address !== ""
                 ) {
-                  // sheetRef.current.snapTo(0);
                   setFlag(!flag);
+                  addOrders();
                   resetForm();
                 } else {
                   alert("You must fill in your information!!");

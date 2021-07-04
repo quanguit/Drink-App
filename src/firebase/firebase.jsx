@@ -22,6 +22,7 @@ export const generateUserDocument = async (user, additionalData) => {
     const { email, displayName } = user;
     const createAt = new Date();
     const Likes = [];
+    const Orders = [];
     const phone = "";
     const address = "";
 
@@ -30,6 +31,7 @@ export const generateUserDocument = async (user, additionalData) => {
         displayName,
         email,
         Likes,
+        Orders,
         createAt,
         address,
         phone,
