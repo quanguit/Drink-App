@@ -35,7 +35,9 @@ const DetailsScreen = ({ route, navigation, addItem }) => {
       setCollection(col);
     };
     getCollection();
-    getCartLiked();
+    if (currentUser) {
+      getCartLiked();
+    }
   }, []);
 
   useEffect(() => {

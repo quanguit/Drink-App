@@ -7,12 +7,16 @@ import { createLogger } from "redux-logger";
 import thunkMiddleware from "redux-thunk";
 import { auth, generateUserDocument } from "./src/firebase/firebase.jsx";
 import { setCurrentUser } from "./src/redux/user/user.actions";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
 
 const loggerMiddleware = createLogger();
 const store = createStore(
   rootReducer,
   applyMiddleware(thunkMiddleware, loggerMiddleware)
 );
+
+export const persistor = persistStore(store);
 
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
@@ -36,7 +40,9 @@ const App = () => {
 export default () => {
   return (
     <Provider store={store}>
-      <App />
+      <PersistGate persistor={persistor}>
+        <App />
+      </PersistGate>
     </Provider>
   );
 };
